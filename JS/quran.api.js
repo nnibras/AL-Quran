@@ -73,7 +73,7 @@ surahList.addEventListener("change", () => {
 //
 window.addEventListener("load", () => {
   fetch(
-    `http://api.alquran.cloud/v1/surah/1/editions/quran-uthmani,en.sahih,bn.bengali`
+    `https://api.alquran.cloud/v1/surah/1/editions/quran-uthmani,en.sahih,bn.bengali`
   )
     .then((response) => response.json())
     .then((data) => {
@@ -114,7 +114,7 @@ surahList.addEventListener("change", () => {
   // else if (selectedText == "Bengali") chooser = 2;
   // else chooser = 0;
   fetch(
-    `http://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-uthmani,en.sahih,bn.bengali`
+    `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-uthmani,en.sahih,bn.bengali`
   )
     .then((response) => response.json())
     .then((data) => {
@@ -154,7 +154,7 @@ languageList.addEventListener("change", () => {
   else if (selectedText == "Bengali") chooser = 2;
   else chooser = 0;
   fetch(
-    `http://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-uthmani,en.sahih,bn.bengali`
+    `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-uthmani,en.sahih,bn.bengali`
   )
     .then((response) => response.json())
     .then((data) => {
