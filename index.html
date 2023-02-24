@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QURAN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/081fda0490.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link
+      href="//db.onlinewebfonts.com/c/3176f374f4993641296629aadeab3af8?family=Kitab"
+      rel="stylesheet"
+      type="text/css"
+    />
+<link rel="icon" href="images/book-quran-solid.svg">
+    <style>
+      @font-face {
+        font-family: "Kitab";
+        src: url("//db.onlinewebfonts.com/t/3176f374f4993641296629aadeab3af8.eot");
+        src: url("//db.onlinewebfonts.com/t/3176f374f4993641296629aadeab3af8.eot?#iefix")
+            format("embedded-opentype"),
+          url("//db.onlinewebfonts.com/t/3176f374f4993641296629aadeab3af8.woff2")
+            format("woff2"),
+          url("//db.onlinewebfonts.com/t/3176f374f4993641296629aadeab3af8.woff")
+            format("woff"),
+          url("//db.onlinewebfonts.com/t/3176f374f4993641296629aadeab3af8.ttf")
+            format("truetype"),
+          url("//db.onlinewebfonts.com/t/3176f374f4993641296629aadeab3af8.svg#Kitab")
+            format("svg");
+      }
+    </style>
+  </head>
+  <body class="">
+    <div class="h-max flex flex-col">
+      <header>
+        <!-- heading and title -->
+        <section
+          class="w-3/4 mx-auto text-center bg-blue-100 text-4xl font-bold mb-5 py-5 fixed top-0 right-0 left-0"
+        >
+          <h1>Al-Quran</h1>
+        </section>
+      </header>
+
+      <main style="margin-bottom: 100px; margin-top: 100px;"">
+        <!-- tool box -->
+        <section  class="w-3/4 mx-auto text-center bg-blue-200 py-4 ">
+          <div class="flex flex-col  justify-around container mx-auto my-auto">
+            <div>
+              <div class="flex flex-col  justify-center items-center">
+                <label class="font-semibold text-lg my-auto mr-5">Surah:</label>
+                <select
+                  id="surah-list"
+                  class="form-multiselect block w-3/4 lg:w-max mt-1 rounded-md shadow-sm text-center"
+                >
+                  <!-- Surahs will be added dynamically here -->
+                </select>
+
+
+                <div class="flex">
+                                  <div class="my-auto">
+                                   <label class="font-semibold text-lg my-auto mx-5 mt-2">Language: </label>
+                </div>
+                <div>
+                                <select id="language" class="form-multiselect block w-max mt-1 rounded-md shadow-sm text-center text-sm ">
+                <option value="arabic">Arabic</option>
+                <option value="english">English</option>
+                <option value="bengali">Bengali</option>
+              </select>
+                </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="flex justify-center my-4">
+              <p id="surah-info"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- main quran page -->
+        <section class="w-3/4 mx-auto text-center bg-blue-300 py-0">
+          <div id="quran" class="text-2xl px-10 py-10 tracking-wide"></div>
+        </section>
+      </main>
+
+      <!-- footer -->
+      <footer class="">
+        <section
+          class="bg-blue-100 py-4 mt-5 fixed bottom-0 right-0 left-0 w-3/4 mx-auto h-20"
+        >
+          <div class="flex flex-col justify-items-center items-center">
+            <div>
+              <h3 class="text-gray-400">© Developed and maintained by N.Nibras</h3>
+            </div>
+
+            <div>
+              <a target="_blank" class="mr-2" href="https://github.com/nnibras" ><i class="fa-brands fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/nafinibras" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+          </div>
+        </section>
+      </footer>
+    </div>
+    <!-- <script></script> -->
+    <script src="JS/quran.api.js"></script>
+  </body>
+</html>

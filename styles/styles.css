@@ -1,0 +1,24 @@
+@import url(//db.onlinewebfonts.com/c/3176f374f4993641296629aadeab3af8?family=Kitab);
+
+select {
+  height: 3rem;
+}
+
+option {
+  color: #333;
+  font-weight: 600;
+}
+
+@media (min-width: 640px) {
+  select {
+    height: 2.5rem;
+  }
+}
+
+body {
+  font-family: "Kitab", serif;
+}
+
+.arabic-text {
+  font-family: "AlQalamQuranMajeedWeb", serif;
+}
