@@ -1,4 +1,9 @@
-@import url(//db.onlinewebfonts.com/c/3176f374f4993641296629aadeab3af8?family=Kitab);
+@font-face {
+  font-family: "Kitab";
+  src: url("path/to/kitab-regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 
 select {
   height: 3rem;
@@ -16,7 +21,7 @@ option {
 }
 
 body {
-  font-family: "Kitab", serif;
+  font-family: "Kitab", sans-serif;
 }
 
 .arabic-text {

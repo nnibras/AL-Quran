@@ -19,9 +19,7 @@ fetch("https://api.alquran.cloud/v1/surah")
 //   when loading set ayah for first surah
 window.addEventListener("load", () => {
   languageList.value = "Arabic";
-  fetch(
-    `https://api.alquran.cloud/v1/surah/1/editions/quran-simple-enhanced,en.sahih`
-  )
+  fetch(`https://api.alquran.cloud/v1/surah/1/editions/quran-simple,en.sahih`)
     .then((response) => response.json())
     .then((data) => {
       const surah = data.data[0];
@@ -47,7 +45,7 @@ surahList.addEventListener("change", () => {
   languageList.value = "Arabic";
   const surahNumber = surahList.value;
   fetch(
-    `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-simple-enhanced,en.sahih`
+    `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-simple,en.sahih`
   )
     .then((response) => response.json())
     .then((data) => {
@@ -73,7 +71,7 @@ surahList.addEventListener("change", () => {
 //
 window.addEventListener("load", () => {
   fetch(
-    `https://api.alquran.cloud/v1/surah/1/editions/quran-uthmani,en.sahih,bn.bengali`
+    `https://api.alquran.cloud/v1/surah/1/editions/quran-simple,en.sahih,bn.bengali`
   )
     .then((response) => response.json())
     .then((data) => {
@@ -114,7 +112,7 @@ surahList.addEventListener("change", () => {
   // else if (selectedText == "Bengali") chooser = 2;
   // else chooser = 0;
   fetch(
-    `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-uthmani,en.sahih,bn.bengali`
+    `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-simple,en.sahih,bn.bengali`
   )
     .then((response) => response.json())
     .then((data) => {
@@ -154,7 +152,7 @@ languageList.addEventListener("change", () => {
   else if (selectedText == "Bengali") chooser = 2;
   else chooser = 0;
   fetch(
-    `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-uthmani,en.sahih,bn.bengali`
+    `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-simple,en.sahih,bn.bengali`
   )
     .then((response) => response.json())
     .then((data) => {
