@@ -27,3 +27,7 @@ body {
 .arabic-text {
   font-family: "AlQalamQuranMajeedWeb", serif;
 }
+
+.hidden {
+  display: none;
+}

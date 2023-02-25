@@ -1,6 +1,7 @@
 const surahList = document.getElementById("surah-list");
 const surahInfo = document.getElementById("surah-info");
 const languageList = document.getElementById("language");
+const audioPlayer = document.getElementById("audio-player");
 
 // load surah
 fetch("https://api.alquran.cloud/v1/surah")
@@ -66,6 +67,9 @@ surahList.addEventListener("change", () => {
       document.getElementById("ayah-list").innerHTML = ayahText;
     })
     .catch((error) => console.log(error));
+
+  // Set the retrieved URL as the src attribute of the audio element
+  audioPlayer.src = `https://github.com/Treposting/Surah-API/blob/main/Surah/${surahNumber}.mp3?raw=true`;
 });
 
 //
@@ -97,6 +101,9 @@ window.addEventListener("load", () => {
       quran.innerHTML = surahHTML;
     })
     .catch((error) => console.log(error));
+
+  // Set the retrieved URL as the src attribute of the audio element
+  audioPlayer.src = `https://github.com/Treposting/Surah-API/blob/main/Surah/1.mp3?raw=true`;
 });
 
 //
@@ -137,6 +144,9 @@ surahList.addEventListener("change", () => {
       quran.innerHTML = surahHTML;
     })
     .catch((error) => console.log(error));
+
+  // Set the retrieved URL as the src attribute of the audio element
+  audioPlayer.src = `https://github.com/Treposting/Surah-API/blob/main/Surah/${surahNumber}.mp3?raw=true`;
 });
 
 //
@@ -177,4 +187,23 @@ languageList.addEventListener("change", () => {
       quran.innerHTML = surahHTML;
     })
     .catch((error) => console.log(error));
+
+  // Set the retrieved URL as the src attribute of the audio element
+  // audioPlayer.src = `https://github.com/Treposting/Surah-API/blob/main/Surah/${surahNumber}.mp3?raw=true`;
 });
+
+const audioLoading = document.getElementById("audio-loading");
+
+// Add  indicator element
+audioPlayer.onloadstart = () => {
+  // Show the loading indicator when the audio file starts loading
+  audioLoading.classList.remove("hidden");
+
+  audioPlayer.classList.add("animate-bounce");
+};
+
+audioPlayer.oncanplaythrough = () => {
+  // Hide the loading indicator and remove the animation when the audio file has finished loading
+  audioLoading.classList.add("hidden");
+  audioPlayer.classList.remove("animate-bounce");
+};

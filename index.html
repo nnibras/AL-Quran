@@ -17,7 +17,7 @@
       <header>
         <!-- heading and title -->
         <section
-          class="w-3/4 mx-auto text-center bg-blue-100 text-4xl font-bold mb-5 py-5 fixed top-0 right-0 left-0"
+          class="w-3/4 mx-auto text-center bg-blue-100 text-4xl font-bold mb-5 py-5 fixed top-0 right-0 left-0 z-10"
         >
           <h1>Al-Quran</h1>
         </section>
@@ -29,7 +29,7 @@
           <div class="flex flex-col  justify-around container mx-auto my-auto">
             <div>
               <div class="flex flex-col  justify-center items-center">
-                <label class="font-semibold text-lg my-auto mr-5">Surah:</label>
+                <label class="font-semibold text-lg my-auto mr-5">Surah</label>
                 <select
                   id="surah-list"
                   class="form-multiselect block w-3/4 lg:w-max mt-1 rounded-md shadow-sm text-center"
@@ -40,7 +40,7 @@
 
                 <div class="flex">
                                   <div class="my-auto">
-                                   <label class="font-semibold text-lg my-auto mx-5 mt-2">Language: </label>
+                                   <label class="font-semibold text-lg my-auto mx-5 mt-2">Language:</label>
                 </div>
                 <div>
                                 <select id="language" class="form-multiselect block w-max mt-1 rounded-md shadow-sm text-center text-sm ">
@@ -60,8 +60,20 @@
           </div>
         </section>
 
+        <!-- audio section -->
+        <section class="sticky right-0 left-0 z-0">
+        <div class="w-3/4 mx-auto flex flex-col justify-center items-center bg-blue-100 py-4">
+          <h1 class="font-bold">Surah Audio</h1>
+          <div id="audio-loading" class="hidden">
+           Loading audio...
+          </div>
+          <audio id="audio-player" class="w-11/12 lg:w-3/12	" src="" controls>
+          Your browser does not support the audio element.
+          </audio>
+        </div>
+        </section>
         <!-- main quran page -->
-        <section class="w-3/4 mx-auto text-center bg-blue-300 py-0">
+        <section class="w-3/4 mx-auto text-center bg-blue-200 py-0">
           <div id="quran" class="text-2xl px-10 py-10 tracking-wide"></div>
         </section>
       </main>
