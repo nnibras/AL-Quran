@@ -29,14 +29,14 @@ window.addEventListener("load", () => {
 
       surahInfo.innerHTML = `
 			       
-			        <p class="text-sm">Number of ayahs: ${ayahCount}</p>
-			        <p class="text-sm">Number of sujud: ${sujudCount}</p>
+			        <p class="text-sm font-bold sm:text-lg">Number of ayahs: ${ayahCount}</p>
+			        <p class="text-sm font-bold sm:text-lg">Number of sujud: ${sujudCount}</p>
 			      
 			      `;
 
-      const ayahs = surah.ayahs;
-      const ayahText = ayahs.map((ayah) => ayah.text).join("<br>");
-      document.getElementById("ayah-list").innerHTML = ayahText;
+      // const ayahs = surah.ayahs;
+      // const ayahText = ayahs.map((ayah) => ayah.text).join("<br>");
+      // document.getElementById("ayah-list").innerHTML = ayahText;
     })
     .catch((error) => console.log(error));
 });
@@ -56,15 +56,15 @@ surahList.addEventListener("change", () => {
 
       surahInfo.innerHTML = `
 			       
-			        <p class="text-sm">Number of ayahs: ${ayahCount}</p>
-			        <p class="text-sm">Number of sujud: ${sujudCount}</p>
+			        <p class="text-sm font-bold sm:text-lg">Number of ayahs: ${ayahCount}</p>
+			        <p class="text-sm font-bold sm:text-lg">Number of sujud: ${sujudCount}</p>
             
 			      
 			      `;
 
-      const ayahs = surah.ayahs;
-      const ayahText = ayahs.map((ayah) => ayah.text).join("<br>");
-      document.getElementById("ayah-list").innerHTML = ayahText;
+      // const ayahs = surah.ayahs;
+      // const ayahText = ayahs.map((ayah) => ayah.text).join("<br>");
+      // document.getElementById("ayah-list").innerHTML = ayahText;
     })
     .catch((error) => console.log(error));
 
@@ -80,8 +80,6 @@ window.addEventListener("load", () => {
     .then((response) => response.json())
     .then((data) => {
       const surah = data.data;
-      console.log(surah);
-
       let surahHTML = "";
       surah[0].ayahs.forEach((ayah) => {
         if (surah[0].ayahs[ayah.numberInSurah - 1].sajda == false) {
@@ -156,7 +154,6 @@ languageList.addEventListener("change", () => {
   const selectElement = document.getElementById("language");
   const selectedOption = selectElement.options[selectElement.selectedIndex];
   const selectedText = selectedOption.textContent;
-  console.log(selectedText);
   let chooser = -1;
   if (selectedText == "English") chooser = 1;
   else if (selectedText == "Bengali") chooser = 2;
@@ -195,10 +192,10 @@ languageList.addEventListener("change", () => {
 const audioLoading = document.getElementById("audio-loading");
 
 if (
-  /^((?!chrome|android).)*safari/i.test(navigator.userAgent) ||
-  /FBAN/i.test(navigator.userAgent) ||
-  /Instagram/i.test(navigator.userAgent) ||
-  /discord/i.test(navigator.userAgent)
+  /^((?!chrome|android).)*safari/i.test(navigator.userAgentData) ||
+  /FBAN/i.test(navigator.userAgentData) ||
+  /Instagram/i.test(navigator.userAgentData) ||
+  /discord/i.test(navigator.userAgentData)
 ) {
   audioPlayer.addEventListener("loadedmetadata", () => {
     audioLoading.style.display = "none";
