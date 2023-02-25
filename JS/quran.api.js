@@ -194,16 +194,22 @@ languageList.addEventListener("change", () => {
 
 const audioLoading = document.getElementById("audio-loading");
 
-// Add  indicator element
-audioPlayer.onloadstart = () => {
-  // Show the loading indicator when the audio file starts loading
-  audioLoading.classList.remove("hidden");
+if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+  audioPlayer.addEventListener("loadedmetadata", () => {
+    audioLoading.style.display = "none";
+  });
+} else {
+  // Add  indicator element
+  audioPlayer.onloadstart = () => {
+    // Show the loading indicator when the audio file starts loading
+    audioLoading.classList.remove("hidden");
 
-  audioPlayer.classList.add("animate-bounce");
-};
+    audioPlayer.classList.add("animate-bounce");
+  };
 
-audioPlayer.oncanplaythrough = () => {
-  // Hide the loading indicator and remove the animation when the audio file has finished loading
-  audioLoading.classList.add("hidden");
-  audioPlayer.classList.remove("animate-bounce");
-};
+  audioPlayer.oncanplaythrough = () => {
+    // Hide the loading indicator and remove the animation when the audio file has finished loading
+    audioLoading.classList.add("hidden");
+    audioPlayer.classList.remove("animate-bounce");
+  };
+}
