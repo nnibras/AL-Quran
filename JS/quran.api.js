@@ -193,9 +193,9 @@ const audioLoading = document.getElementById("audio-loading");
 
 if (
   /^((?!chrome|android).)*safari/i.test(navigator.userAgentData) ||
-  /FBAN/i.test(navigator.userAgentData) ||
-  /Instagram/i.test(navigator.userAgentData) ||
-  /discord/i.test(navigator.userAgentData)
+  /FBAN/i.test(navigator.userAgent) ||
+  /Instagram/i.test(navigator.userAgent) ||
+  /discord/i.test(navigator.userAgent)
 ) {
   audioPlayer.addEventListener("loadedmetadata", () => {
     audioLoading.style.display = "none";
