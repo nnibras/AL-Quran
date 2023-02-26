@@ -15,7 +15,10 @@ fetch("https://api.alquran.cloud/v1/surah")
       surahList.appendChild(option);
     });
   })
-  .catch((error) => console.log(error));
+  .catch((error) => {
+    console.log(error);
+    alert("error 404 not found!");
+  });
 
 //   when loading set ayah for first surah
 window.addEventListener("load", () => {
@@ -38,7 +41,10 @@ window.addEventListener("load", () => {
       // const ayahText = ayahs.map((ayah) => ayah.text).join("<br>");
       // document.getElementById("ayah-list").innerHTML = ayahText;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+      alert("error 404 not found!");
+    });
 });
 
 //on change update surah list
@@ -66,7 +72,10 @@ surahList.addEventListener("change", () => {
       // const ayahText = ayahs.map((ayah) => ayah.text).join("<br>");
       // document.getElementById("ayah-list").innerHTML = ayahText;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+      alert("error 404 not found!");
+    });
 
   // Set the retrieved URL as the src attribute of the audio element
   audioPlayer.src = `https://github.com/Treposting/Surah-API/blob/main/Surah/${surahNumber}.mp3?raw=true`;
@@ -98,7 +107,10 @@ window.addEventListener("load", () => {
       });
       quran.innerHTML = surahHTML;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+      alert("error 404 not found!");
+    });
 
   // Set the retrieved URL as the src attribute of the audio element
   audioPlayer.src = `https://github.com/Treposting/Surah-API/blob/main/Surah/1.mp3?raw=true`;
@@ -141,7 +153,10 @@ surahList.addEventListener("change", () => {
       });
       quran.innerHTML = surahHTML;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+      alert("error 404 not found!");
+    });
 
   // Set the retrieved URL as the src attribute of the audio element
   audioPlayer.src = `https://github.com/Treposting/Surah-API/blob/main/Surah/${surahNumber}.mp3?raw=true`;
@@ -183,7 +198,10 @@ languageList.addEventListener("change", () => {
       });
       quran.innerHTML = surahHTML;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+      alert("error 404 not found!");
+    });
 
   // Set the retrieved URL as the src attribute of the audio element
   // audioPlayer.src = `https://github.com/Treposting/Surah-API/blob/main/Surah/${surahNumber}.mp3?raw=true`;
