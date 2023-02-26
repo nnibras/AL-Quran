@@ -213,7 +213,8 @@ if (
   /^((?!chrome|android).)*safari/i.test(navigator.userAgent) ||
   /FBAN/i.test(navigator.userAgent) ||
   /Instagram/i.test(navigator.userAgent) ||
-  /discord/i.test(navigator.userAgent)
+  /discord/i.test(navigator.userAgent) ||
+  /LinkedIn/.test(navigator.userAgent)
 ) {
   audioPlayer.addEventListener("loadedmetadata", () => {
     audioLoading.style.display = "none";
