@@ -56,6 +56,9 @@ window.addEventListener("load", () => {
     .then((data) => {
       const ayahs = data.data.ayahs;
       ayahList.innerHTML = ""; // Clear previous options
+      const option = document.createElement("option");
+      option.text = ``;
+      ayahList.appendChild(option);
       ayahs.forEach((ayah) => {
         const option = document.createElement("option");
         option.value = ayah.numberInSurah;
@@ -75,6 +78,9 @@ surahList.addEventListener("change", () => {
     .then((data) => {
       const ayahs = data.data[0].ayahs;
       ayahList.innerHTML = ""; // Clear previous options
+      const option = document.createElement("option");
+      option.text = ``;
+      ayahList.appendChild(option);
       ayahs.forEach((ayah) => {
         const option = document.createElement("option");
         option.value = ayah.numberInSurah;
@@ -87,11 +93,53 @@ surahList.addEventListener("change", () => {
 
 ayahList.addEventListener("change", () => {
   const ayahNumber = document.getElementById("ayahs-container").value;
-  console.log(ayahNumber);
-  const ayahElement = document.getElementById(`ayah-${ayahNumber - 2}`);
 
-  if (ayahElement) {
+  const ayahElement = document.getElementById(`ayah-${ayahNumber - 3}`);
+
+  const ayahElement2 = document.getElementById(`ayah-${ayahNumber}`);
+
+  if (ayahElement || ayahNumber > 3) {
     ayahElement.scrollIntoView({ behavior: "smooth" });
+    const surahNumber = surahList.value;
+    const apiUrl = `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-simple`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        const ayahs = data.data[0].ayahs;
+        ayahList.innerHTML = ""; // Clear previous options
+        const option = document.createElement("option");
+        option.text = ``;
+        ayahList.appendChild(option);
+        ayahs.forEach((ayah) => {
+          const option = document.createElement("option");
+          option.value = ayah.numberInSurah;
+          option.text = `${ayah.numberInSurah}`;
+          ayahList.appendChild(option);
+        });
+      })
+      .catch((error) => console.error(error));
+  } else {
+    ayahElement2.scrollIntoView({ behavior: "smooth" });
+    const surahNumber = surahList.value;
+    const apiUrl = `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-simple`;
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        const ayahs = data.data[0].ayahs;
+        ayahList.innerHTML = ""; // Clear previous options
+        const option = document.createElement("option");
+        option.text = ``;
+        ayahList.appendChild(option);
+        ayahs.forEach((ayah) => {
+          const option = document.createElement("option");
+          option.value = ayah.numberInSurah;
+          option.text = `${ayah.numberInSurah}`;
+          ayahList.appendChild(option);
+        });
+      })
+      .catch((error) => console.error(error));
   }
 });
 
