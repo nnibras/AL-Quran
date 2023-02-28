@@ -2,6 +2,7 @@ const surahList = document.getElementById("surah-list");
 const surahInfo = document.getElementById("surah-info");
 const languageList = document.getElementById("language");
 const audioPlayer = document.getElementById("audio-player");
+const surahSpan = document.getElementById("surah-name");
 
 // load surah
 fetch("https://api.alquran.cloud/v1/surah")
@@ -37,6 +38,8 @@ window.addEventListener("load", () => {
 			      
 			      `;
 
+      surahSpan.innerText = ` ${surah.englishName} `;
+
       // const ayahs = surah.ayahs;
       // const ayahText = ayahs.map((ayah) => ayah.text).join("<br>");
       // document.getElementById("ayah-list").innerHTML = ayahText;
@@ -67,6 +70,8 @@ surahList.addEventListener("change", () => {
             
 			      
 			      `;
+
+      surahSpan.innerText = ` ${surah.englishName} `;
 
       // const ayahs = surah.ayahs;
       // const ayahText = ayahs.map((ayah) => ayah.text).join("<br>");
@@ -160,6 +165,8 @@ surahList.addEventListener("change", () => {
 
   // Set the retrieved URL as the src attribute of the audio element
   audioPlayer.src = `https://github.com/Treposting/Surah-API/blob/main/Surah/${surahNumber}.mp3?raw=true`;
+
+  audioPlayer.title = `${surah.englishName}`;
 });
 
 //
