@@ -3,6 +3,7 @@ const surahInfo = document.getElementById("surah-info");
 const languageList = document.getElementById("language");
 const audioPlayer = document.getElementById("audio-player");
 const surahSpan = document.getElementById("surah-name");
+const ayahList = document.getElementById("ayahs-container");
 
 // load surah
 fetch("https://api.alquran.cloud/v1/surah")
@@ -39,15 +40,59 @@ window.addEventListener("load", () => {
 			      `;
 
       surahSpan.innerText = ` ${surah.englishName} `;
-
-      // const ayahs = surah.ayahs;
-      // const ayahText = ayahs.map((ayah) => ayah.text).join("<br>");
-      // document.getElementById("ayah-list").innerHTML = ayahText;
     })
     .catch((error) => {
       console.log(error);
       alert("error 404 not found!");
     });
+});
+
+//ayah
+window.addEventListener("load", () => {
+  const apiUrl = `https://api.alquran.cloud/v1/surah/1`;
+
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      const ayahs = data.data.ayahs;
+      ayahList.innerHTML = ""; // Clear previous options
+      ayahs.forEach((ayah) => {
+        const option = document.createElement("option");
+        option.value = ayah.numberInSurah;
+        option.text = `${ayah.numberInSurah}`;
+        ayahList.appendChild(option);
+      });
+    })
+    .catch((error) => console.error(error));
+});
+
+surahList.addEventListener("change", () => {
+  const surahNumber = surahList.value;
+  const apiUrl = `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-simple`;
+
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      const ayahs = data.data[0].ayahs;
+      ayahList.innerHTML = ""; // Clear previous options
+      ayahs.forEach((ayah) => {
+        const option = document.createElement("option");
+        option.value = ayah.numberInSurah;
+        option.text = `${ayah.numberInSurah}`;
+        ayahList.appendChild(option);
+      });
+    })
+    .catch((error) => console.error(error));
+});
+
+ayahList.addEventListener("change", () => {
+  const ayahNumber = document.getElementById("ayahs-container").value;
+  console.log(ayahNumber);
+  const ayahElement = document.getElementById(`ayah-${ayahNumber - 2}`);
+
+  if (ayahElement) {
+    ayahElement.scrollIntoView({ behavior: "smooth" });
+  }
 });
 
 //on change update surah list
@@ -98,15 +143,15 @@ window.addEventListener("load", () => {
       surah[0].ayahs.forEach((ayah) => {
         if (surah[0].ayahs[ayah.numberInSurah - 1].sajda == false) {
           surahHTML += `
-        <h1 id="section${ayah.numberInSurah} class="text-xl   font-extrabold">${ayah.numberInSurah}</h1> 
-        <p class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
+        <h1 class="text-xl   font-extrabold">${ayah.numberInSurah}</h1> 
+        <p id="ayah-${ayah.numberInSurah}" class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
         `;
         } else {
           surahHTML += `
         
         <h1 class="text-xl   font-extrabold">${ayah.numberInSurah}</h1> 
         <h1 class="text-sm   font-extrabold">* SAJDA *</h1>  
-        <p class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
+        <p "ayah-${ayah.numberInSurah}" class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
         `;
         }
       });
@@ -145,14 +190,14 @@ surahList.addEventListener("change", () => {
         if (surah[0].ayahs[ayah.numberInSurah - 1].sajda == false) {
           surahHTML += `
         <h1 class="text-xl   font-extrabold">${ayah.numberInSurah}</h1> 
-        <p class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
+        <p id="ayah-${ayah.numberInSurah}" class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
         `;
         } else {
           surahHTML += `
            
         <h1 class="text-xl   font-extrabold">${ayah.numberInSurah}</h1> 
               <h1 class="text-sm   font-extrabold">* SAJDA *</h1> 
-        <p class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
+        <p id="ayah-${ayah.numberInSurah}" class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
         `;
         }
       });
@@ -165,8 +210,6 @@ surahList.addEventListener("change", () => {
 
   // Set the retrieved URL as the src attribute of the audio element
   audioPlayer.src = `https://github.com/Treposting/Surah-API/blob/main/Surah/${surahNumber}.mp3?raw=true`;
-
-  audioPlayer.title = `${surah.englishName}`;
 });
 
 //
@@ -192,14 +235,14 @@ languageList.addEventListener("change", () => {
         if (surah[0].ayahs[ayah.numberInSurah - 1].sajda == false) {
           surahHTML += `
         <h1 class="text-xl   font-extrabold">${ayah.numberInSurah}</h1> 
-        <p class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
+        <p id="ayah-${ayah.numberInSurah}" class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
         `;
         } else {
           surahHTML += `
            
         <h1 class="text-xl   font-extrabold">${ayah.numberInSurah}</h1> 
               <h1 class="text-sm   font-extrabold">* SAJDA *</h1> 
-        <p class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
+        <p id="ayah-${ayah.numberInSurah}" class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
         `;
         }
       });

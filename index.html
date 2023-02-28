@@ -25,11 +25,12 @@
     </header>
 
     <main style="margin-bottom: 90px; margin-top: 90px;"">
+      <div class=" ">
+      <div>
         <!-- tool box -->
-        <section 
-      class=" w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-4 rounded-md border-4
+        <section class=" w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-4 rounded-md border-4
       border-blue-300 ">
-      <div class=" flex flex-col justify-around container mx-auto my-auto">
+          <div class=" flex flex-col justify-around container mx-auto my-auto">
       <div>
         <div class="flex flex-col  justify-center items-center">
           <label class="font-semibold text-lg my-auto mr-5">Surah</label>
@@ -54,31 +55,44 @@
 
         </div>
       </div>
+      <!--  -->
+      <div class="flex justify-center  mt-2">
+        <label class="font-semibold text-lg my-auto ">Ayah:</label>
+        <select id="ayahs-container"
+          class="form-multiselect block w-14 lg:w/12 ml-12 rounded-md shadow-sm text-center text-sm h-7">
+          <!-- Surahs will be added dynamically here -->
+        </select>
 
+      </div>
+      <!--  -->
       <div class="flex justify-center my-4">
         <p id="surah-info"></p>
       </div>
   </div>
   </section>
+  </div>
 
-  <!-- audio section -->
-  <section style="top:84px;"
-    class="sticky  right-0 left-0 z-0 rounded-md border-2 border-white	w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto ">
-    <div class="w-full mx-auto flex flex-col justify-center items-center bg-blue-100 py-4">
-      <h1 class="font-bold ">Surah <span id="surah-name" class="font-bold"></span> Recitation</h1>
-      <div id="audio-loading" class="hidden">
-        Loading audio...
+  <div>
+    <!-- audio section -->
+    <section style="top:84px;"
+      class="sticky  right-0 left-0 z-0 rounded-md border-2 border-white	w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto ">
+      <div class="w-full mx-auto flex flex-col justify-center items-center bg-blue-100 py-4">
+        <h1 class="font-bold ">Surah <span id="surah-name" class="font-bold"></span> Recitation</h1>
+        <div id="audio-loading" class="hidden">
+          Loading audio...
+        </div>
+        <audio id="audio-player" class="w-11/12 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-3/12	" src="" controls>
+          Your browser does not support the audio element.
+        </audio>
       </div>
-      <audio id="audio-player" class="w-11/12 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-3/12	" src="" controls>
-        Your browser does not support the audio element.
-      </audio>
-    </div>
-  </section>
-  <!-- main quran page -->
-  <section
-    class="w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-0 border-4 border-blue-300	 rounded-md ">
-    <div id="quran" class="text-2xl px-10 py-10 tracking-wide"></div>
-  </section>
+    </section>
+    <!-- main quran page -->
+    <section
+      class="w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-0 border-4 border-blue-300	 rounded-md ">
+      <div id="quran" class="text-2xl px-10 py-10 tracking-wide"></div>
+    </section>
+  </div>
+  </div>
   </main>
 
   <!-- footer -->
