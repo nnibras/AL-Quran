@@ -98,7 +98,7 @@ window.addEventListener("load", () => {
       surah[0].ayahs.forEach((ayah) => {
         if (surah[0].ayahs[ayah.numberInSurah - 1].sajda == false) {
           surahHTML += `
-        <h1 class="text-xl   font-extrabold">${ayah.numberInSurah}</h1> 
+        <h1 id="section${ayah.numberInSurah} class="text-xl   font-extrabold">${ayah.numberInSurah}</h1> 
         <p class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
         `;
         } else {
