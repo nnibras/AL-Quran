@@ -105,7 +105,7 @@ window.addEventListener("load", () => {
           surahHTML += `
         
         <h1 class="text-xl   font-extrabold">${ayah.numberInSurah}</h1> 
-        <h1 class="text-xl   font-extrabold">[Sajda]</h1>  
+        <h1 class="text-sm   font-extrabold">* SAJDA *</h1>  
         <p class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
         `;
         }
@@ -151,7 +151,7 @@ surahList.addEventListener("change", () => {
           surahHTML += `
            
         <h1 class="text-xl   font-extrabold">${ayah.numberInSurah}</h1> 
-              <h1 class="text-xl   font-extrabold">[Sajda]</h1> 
+              <h1 class="text-sm   font-extrabold">* SAJDA *</h1> 
         <p class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
         `;
         }
@@ -198,7 +198,7 @@ languageList.addEventListener("change", () => {
           surahHTML += `
            
         <h1 class="text-xl   font-extrabold">${ayah.numberInSurah}</h1> 
-              <h1 class="text-xl   font-extrabold">[Sajda]</h1> 
+              <h1 class="text-sm   font-extrabold">* SAJDA *</h1> 
         <p class="text-center mt-2 mb-4 font-bold">${ayah.text}</p>
         `;
         }
