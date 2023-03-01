@@ -56,7 +56,11 @@ function loadAyahList(url) {
         ayahList.appendChild(option);
       });
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      console.log(error);
+      alert("error 404 not found!");
+      console.error(error);
+    });
 }
 
 function setMainQuranPage(url, chooser = 0) {
