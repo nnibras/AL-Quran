@@ -17,7 +17,6 @@ function loadSurah(url) {
 }
 
 function setAyahSajdaCount(url) {
-  languageList.value = "Arabic";
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -85,9 +84,48 @@ function setMainQuranPage(url, chooser = 0) {
         }
       });
       quran.innerHTML = surahHTML;
+      ping.style.display = "none";
     })
     .catch((error) => {
       console.log(error);
       alert("error 404 not found!");
     });
+}
+
+function chooser() {
+  const selectElement = document.getElementById("language");
+  const selectedOption = selectElement.options[selectElement.selectedIndex];
+  const selectedText = selectedOption.textContent;
+  let chooser = -1;
+  if (selectedText == "English Transliteration") chooser = 1;
+  else if (selectedText == "English") chooser = 2;
+  else if (selectedText == "Bengali") chooser = 3;
+  else if (selectedText == "Albanian") chooser = 4;
+  else if (selectedText == "Azerbaijani") chooser = 5;
+  else if (selectedText == "Bosnian") chooser = 6;
+  else if (selectedText == "Bulgarian") chooser = 7;
+  else if (selectedText == "Chinese") chooser = 8;
+  else if (selectedText == "Czech") chooser = 9;
+  else if (selectedText == "Dutch") chooser = 10;
+  else if (selectedText == "Farsi") chooser = 11;
+  else if (selectedText == "French") chooser = 12;
+  else if (selectedText == "German") chooser = 13;
+  else if (selectedText == "Hindi") chooser = 14;
+  else if (selectedText == "Indonesian") chooser = 15;
+  else if (selectedText == "Italian") chooser = 16;
+  else if (selectedText == "Japanese") chooser = 17;
+  else if (selectedText == "Korean") chooser = 18;
+  else if (selectedText == "Malay") chooser = 19;
+  else if (selectedText == "Norwegian") chooser = 20;
+  else if (selectedText == "Polish") chooser = 21;
+  else if (selectedText == "Portuguese") chooser = 22;
+  else if (selectedText == "Romanian") chooser = 23;
+  else if (selectedText == "Russian") chooser = 24;
+  else if (selectedText == "Spanish") chooser = 25;
+  else if (selectedText == "Swedish") chooser = 26;
+  else if (selectedText == "Turkish") chooser = 27;
+  else if (selectedText == "Urdu") chooser = 28;
+  else chooser = 0;
+
+  return chooser;
 }

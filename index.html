@@ -9,95 +9,126 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://kit.fontawesome.com/081fda0490.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="styles/styles.css" />
-
   <link rel="icon" href="images/book-quran-solid.svg">
-
 </head>
 
 <body class="bg-blue-100 sm:bg-white lg:bg-white md:bg-white">
-  <div class="h-max flex flex-col">
-    <header>
-      <!-- heading and title -->
-      <section
-        class="w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-100 text-4xl font-bold mb-5 py-5 fixed top-0 right-0 left-0 z-10 rounded-md border-2 border-black">
-        <a href="">Al-Quran</a>
-      </section>
-    </header>
+  <!-- heading and title -->
+  <header>
+    <section
+      class="w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-100 text-4xl font-bold mb-5 py-5 fixed top-0 right-0 left-0 z-10 rounded-md border-2 border-black">
+      <a href="">Al-Quran</a>
+    </section>
+  </header>
 
-    <main style="margin-bottom: 90px; margin-top: 90px;"">
-      <div class=" ">
-      <div>
-        <!-- tool box -->
-        <section class=" w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-4 rounded-md border-4
-      border-blue-300 ">
-          <div class=" flex flex-col justify-around container mx-auto my-auto">
-      <div>
+  <!-- main section contains tool box, audio box, main quran page -->
+  <main>
+    <div style=" margin-bottom: 90px; margin-top: 90px;">
+
+      <!-- tool box -->
+      <section class=" w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-4 rounded-md border-4
+        border-blue-300 ">
+
+        <!-- surah list -->
         <div class="flex flex-col  justify-center items-center">
           <label class="font-semibold text-lg my-auto mr-5">Surah</label>
           <select id="surah-list"
-            class="form-multiselect block w-4/5 md:w-fit lg:w-fit mt-1 rounded-md shadow-sm text-center">
-            <!-- Surahs will be added dynamically here -->
+            class="form-multiselect block w-4/5 md:w-fit lg:w-fit mt-1 rounded-md shadow-sm text-center h-10">
+            <!-- surah list will be added dynamically here -->
           </select>
 
-
+          <!-- translation list -->
           <div class="flex mt-3">
             <div class="">
-              <label class="font-semibold text-lg mr-2 mx-auto">Translation:</label>
+              <label class="font-semibold text-lg mr-2 ml-5 mx-auto">Translation:</label>
             </div>
             <div>
               <select id="language" class="form-multiselect block w-max  rounded-md shadow-sm text-center text-sm h-7">
-                <option value="arabic">Arabic</option>
-                <option value="english">English</option>
-                <option value="bengali">Bengali</option>
+                <option value="Arabic">Arabic</option>
+                <option value="English Transliteration">English Transliteration</option>
+                <option value="English">English</option>
+                <option value="Bengali">Bengali</option>
+                <option value="Albanian">Albanian</option>
+                <option value="Azerbaijani">Azerbaijani</option>
+                <option value="Bosnian">Bosnian</option>
+                <option value="Bulgarian">Bulgarian</option>
+                <option value="Chinese">Chinese</option>
+                <option value="Czech">Czech</option>
+                <option value="Dutch">Dutch</option>
+                <option value="Farsi">Farsi</option>
+                <option value="French">French</option>
+                <option value="German">German</option>
+                <option value="Hindi">Hindi</option>
+                <option value="Indonesian">Indonesian</option>
+                <option value="Italian">Italian</option>
+                <option value="Japanese">Japanese</option>
+                <option value="Korean">Korean</option>
+                <option value="Malay">Malay</option>
+                <option value="Norwegian">Norwegian</option>
+                <option value="Polish">Polish</option>
+                <option value="Portuguese">Portuguese</option>
+                <option value="Romanian">Romanian</option>
+                <option value="Russian">Russian</option>
+                <option value="Spanish">Spanish</option>
+                <option value="Swedish">Swedish</option>
+                <option value="Turkish">Turkish</option>
+                <option value="Urdu">Urdu</option>
+
               </select>
+            </div>
+
+            <div>
+              <span class="fixed flex h-3 w-3 justify-center items-center pl-3 m my-2">
+                <span id="ping" class="animate-ping
+                   absolute inline-flex h-full w-full   opacity-50"><i class="fa-sharp fa-solid fa-circle"></i></span>
+                <span class="relative inline-flex rounded-full h-3 w-3"></span>
+              </span>
             </div>
           </div>
 
+          <!--ayah selection section  -->
+          <div class="flex fe justify-center  mt-2">
+            <label class="font-semibold text-lg my-auto ">Ayah:</label>
+            <select id="ayahs-container"
+              class="form-multiselect block w-14 lg:w/12 ml-12 rounded-md shadow-sm text-center text-sm h-7">
+              <!-- Surahs will be added dynamically here -->
+            </select>
+          </div>
+
+          <!-- surah information section -->
+          <div class="flex justify-center my-4">
+            <p id="surah-info"></p>
+          </div>
         </div>
-      </div>
-      <!--  -->
-      <div class="flex justify-center  mt-2">
-        <label class="font-semibold text-lg my-auto ">Ayah:</label>
-        <select id="ayahs-container"
-          class="form-multiselect block w-14 lg:w/12 ml-12 rounded-md shadow-sm text-center text-sm h-7">
-          <!-- Surahs will be added dynamically here -->
-        </select>
+      </section>
 
-      </div>
-      <!--  -->
-      <div class="flex justify-center my-4">
-        <p id="surah-info"></p>
-      </div>
-  </div>
-  </section>
-  </div>
+      <!-- audio box -->
+      <section style="top:84px;"
+        class="sticky  right-0 left-0 z-0 rounded-md border-2 border-white	w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto ">
+        <div class="w-full mx-auto flex flex-col justify-center items-center bg-blue-100 py-4">
+          <h1 class="font-bold ">Surah <span id="surah-name" class="font-bold"></span> Recitation</h1>
+          <audio id="audio-player" class="w-11/12 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-3/12" src="" controls>
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </section>
 
-  <div>
-    <!-- audio section -->
-    <section style="top:84px;"
-      class="sticky  right-0 left-0 z-0 rounded-md border-2 border-white	w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto ">
-      <div class="w-full mx-auto flex flex-col justify-center items-center bg-blue-100 py-4">
-        <h1 class="font-bold ">Surah <span id="surah-name" class="font-bold"></span> Recitation</h1>
-        <audio id="audio-player" class="w-11/12 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-3/12" src="" controls>
-          Your browser does not support the audio element.
-        </audio>
-      </div>
-    </section>
-    <!-- main quran page -->
-    <section
-      class="w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-0 border-4 border-blue-300	 rounded-md ">
-      <div id="quran" class="text-2xl px-10 py-10 tracking-wide"></div>
-    </section>
-  </div>
-  </div>
+      <!-- main quran box -->
+      <section
+        class="w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-0 border-4 border-blue-300	 rounded-md ">
+        <div id="quran" class="text-2xl px-10 py-10 tracking-wide">
+          <!-- the contents will be added dynamically -->
+        </div>
+      </section>
+    </div>
   </main>
 
   <!-- footer -->
-  <footer class="">
+  <footer>
     <section
       class="bg-blue-100 py-4 mt-5 fixed bottom-0 right-0 left-0 w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto h-20 rounded-md border-2 border-black">
       <div class="flex flex-col justify-items-center items-center">
-        <div class="">
+        <div>
           <h3 class="text-gray-400 ">© Developed and maintained by N.Nibras</h3>
         </div>
 
@@ -108,10 +139,11 @@
       </div>
     </section>
   </footer>
-  </div>
+
   <!-- <script></script> -->
   <script src="JS/utility.js"></script>
-  <script src="JS/quran.api.js"></script>
+  <script src="JS/quran.js"></script>
+  <script src="JS/indicator.js"></script>
 
 </body>
 
