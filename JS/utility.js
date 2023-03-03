@@ -84,8 +84,8 @@ function setMainQuranPage(url, chooser = 0) {
         }
       });
       quran.innerHTML = surahHTML;
-      language.classList.remove("animate-pulse");
-      surahList.classList.remove("animate-pulse");
+      language.classList.remove("animate-bounce");
+      surahList.classList.remove("animate-bounce");
     })
     .catch((error) => {
       console.log(error);

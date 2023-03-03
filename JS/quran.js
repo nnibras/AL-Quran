@@ -72,7 +72,7 @@ surahList.addEventListener("change", () => {
 
 // when surah is changed set the main quran page for that surah
 surahList.addEventListener("change", () => {
-  surahList.classList.add("animate-pulse");
+  surahList.classList.add("animate-bounce");
   const surahNumber = surahList.value;
   const url = `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-simple,en.sahih,bn.bengali`;
 
@@ -83,7 +83,7 @@ surahList.addEventListener("change", () => {
 
 //when language is selected, based on the selection the quran main page is updated.
 languageList.addEventListener("change", () => {
-  language.classList.add("animate-pulse");
+  language.classList.add("animate-bounce");
   const surahNumber = surahList.value;
   const url = `https://api.alquran.cloud/v1/surah/${surahNumber}/editions/quran-simple,en.transliteration,en.sahih,bn.bengali,sq.ahmeti,az.mammadaliyev,bs.mlivo,bg.theophanov,zh.jian,cs.hrbek,nl.keyzer,fa.ayati,fr.hamidullah,de.aburida,hi.farooq,id.indonesian,it.piccardo,ja.japanese,ko.korean,ms.basmeih,no.berg,pl.bielawskiego,pt.elhayek,ro.grigore,ru.kuliev,es.asad,sv.bernstrom,tr.ates,ur.ahmedali`;
 
