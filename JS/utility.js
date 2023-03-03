@@ -32,6 +32,7 @@ function setAyahSajdaCount(url) {
 			      `;
 
       surahSpan.innerText = ` ${surah.englishName} `;
+      document.title = `Quran|${surah.englishName}`;
     })
     .catch((error) => {
       console.log(error);
