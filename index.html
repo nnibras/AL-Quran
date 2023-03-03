@@ -13,10 +13,11 @@
 </head>
 
 <body class="bg-blue-100 sm:bg-white lg:bg-white md:bg-white">
+
   <!-- heading and title -->
   <header>
     <section
-      class="w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-100 text-4xl font-bold mb-5 py-5 fixed top-0 right-0 left-0 z-10 rounded-md border-2 border-black">
+      class="dm2 w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-100 text-4xl font-bold mb-5 py-5 fixed top-0 right-0 left-0 z-10 rounded-md border-2 border-black">
       <a href="">Al-Quran</a>
     </section>
   </header>
@@ -26,7 +27,7 @@
     <div style=" margin-bottom: 90px; margin-top: 90px;">
 
       <!-- tool box -->
-      <section class=" w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-4 rounded-md border-4
+      <section class="dm1 w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-4 rounded-md border-4
         border-blue-300 ">
 
         <!-- surah list -->
@@ -88,16 +89,24 @@
           </div>
 
           <!-- surah information section -->
-          <div class="flex justify-center my-4">
+          <div class="flex justify-center my-2">
             <p id="surah-info"></p>
           </div>
         </div>
+
+        <!-- dark/normal mode btn -->
+        <div>
+          <button id="mode-btn" class="rounded-full px-6 text-xs py-2 bg-white"><i class="fa-regular fa-moon"></i> <-->
+              <i class="fa-regular fa-sun"></i></button>
+        </div>
       </section>
+
+
 
       <!-- audio box -->
       <section style="top:84px;"
-        class="sticky  right-0 left-0 z-0 rounded-md border-2 border-white	w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto ">
-        <div class="w-full mx-auto flex flex-col justify-center items-center bg-blue-100 py-4">
+        class="dm2 sticky  right-0 left-0 z-0 rounded-md border-2 border-white	w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto ">
+        <div class="dm2 w-full mx-auto flex flex-col justify-center items-center bg-blue-100 py-4">
           <h1 class="font-bold ">Surah <span id="surah-name" class="font-bold"></span> Recitation</h1>
           <audio id="audio-player" class="w-11/12 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-3/12" src="" controls>
             Your browser does not support the audio element.
@@ -107,7 +116,7 @@
 
       <!-- main quran box -->
       <section
-        class="w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-0 border-4 border-blue-300	 rounded-md ">
+        class="dm1 w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-0 border-4 border-blue-300	 rounded-md ">
         <div id="quran" class="text-2xl px-10 py-10 tracking-wide">
           <!-- the contents will be added dynamically -->
         </div>
@@ -118,7 +127,7 @@
   <!-- footer -->
   <footer>
     <section
-      class="bg-blue-100 py-4 mt-5 fixed bottom-0 right-0 left-0 w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto h-20 rounded-md border-2 border-black">
+      class="dm2 bg-blue-100 py-4 mt-5 fixed bottom-0 right-0 left-0 w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto h-20 rounded-md border-2 border-black">
       <div class="flex flex-col justify-items-center items-center">
         <div>
           <h3 class="text-gray-400 ">© Developed and maintained by N.Nibras</h3>
@@ -136,6 +145,7 @@
   <script src="JS/utility.js"></script>
   <script src="JS/quran.js"></script>
   <script src="JS/indicator.js"></script>
+  <script src="JS/darkmode.js"></script>
 
 </body>
 

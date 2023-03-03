@@ -12,3 +12,39 @@ body {
 select {
   text-align-last: center;
 }
+
+body.dark-mode {
+  background-color: #333;
+  color: #fff;
+}
+
+.dark-mode button {
+  background-color: #333;
+}
+
+.dark-mode select {
+  background-color: #333;
+}
+
+.dark-mode h1 {
+  color: #fff;
+}
+
+.dark-mode a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.dark-mode a:hover {
+  border-bottom: none;
+}
+
+.dark-mode .dm1 {
+  background-color: #354e4b;
+  border-color: #455859;
+}
+
+.dark-mode .dm2 {
+  background-color: #004b49;
+  border-color: black;
+}
