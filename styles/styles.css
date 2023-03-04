@@ -22,6 +22,10 @@ body.dark-mode {
   background-color: #333;
 }
 
+select {
+  background-color: white;
+}
+
 .dark-mode select {
   background-color: #333;
 }
