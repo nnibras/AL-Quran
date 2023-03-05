@@ -9,6 +9,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://kit.fontawesome.com/081fda0490.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="styles/styles.css" />
+  <link rel="stylesheet" href="styles/style-darkmode.css">
+  <link rel="stylesheet" href="styles/style-modal.css" />
   <link rel="icon" href="images/book-quran-solid.svg">
 </head>
 
@@ -16,19 +18,24 @@
 
   <!-- heading and title -->
   <header>
-    <section
-      class="dm2 w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-100 text-4xl font-bold mb-5 py-5 fixed top-0 right-0 left-0 z-10 rounded-md border-2 border-black">
+    <section id="content"
+      class="dm2 w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-100 text-4xl font-bold mb-5 py-5 fixed top-0 right-0 left-0 z-20 rounded-md border-2 border-black">
       <a href="">Al-Quran</a>
     </section>
   </header>
+
 
   <!-- main section contains tool box, audio box, main quran page -->
   <main>
     <div style=" margin-bottom: 90px; margin-top: 90px;">
 
+
+
       <!-- tool box -->
       <section class="dm1 w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-4 rounded-md border-4
         border-blue-300 ">
+
+
 
         <!-- surah list -->
         <div class="flex flex-col  justify-center items-center">
@@ -105,7 +112,14 @@
 
       <!-- audio box -->
       <section style="top:84px;"
-        class="dm2 sticky  right-0 left-0 z-0 rounded-md border-2 border-white	w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto ">
+        class="dm3 sticky  right-0 left-0 z-0 rounded-md border-2 border-white	w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto ">
+
+        <!-- btn for extension -->
+        <div class="relative">
+          <button id="modal-btn" class="hidden absolute right-1 pl-2 pb-2  modal-open mx-btn"><i
+              class="fa-solid fa-maximize"></i></button>
+        </div>
+
         <div class="dm2 w-full mx-auto flex flex-col justify-center items-center bg-blue-100 py-4">
           <h1 class="font-bold ">Surah <span id="surah-name" class="font-bold"></span> Recitation</h1>
           <audio id="audio-player" class="w-11/12 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-3/12" src="" controls>
@@ -122,6 +136,98 @@
         </div>
       </section>
     </div>
+
+    <!--  modal section -->
+    <section id="modal-container">
+      <div id="modal-id"
+        class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center">
+        <div class="modal-overlay absolute w-full h-full backdrop-blur-md"></div>
+
+        <div class="modal-container dm4 bg-blue-100 w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+          <div class="modal-content py-4 text-left px-6 mb-10">
+            <div class="flex justify-between items-center pb-3">
+              <p></p>
+              <div class="modal-close cursor-pointer z-50 modal-close-btn">
+                <button id="esc-btn" class="text-2xl ml-1"><i class="fa-solid fa-circle-xmark"></i></button>
+              </div>
+            </div>
+            <section class="dm1 w-11/12 sm:w-3/4 md:w-3/4 lg:w-3/4 mx-auto text-center bg-blue-200 py-4 rounded-md border-4
+                        border-blue-300 ">
+
+              <!-- surah list -->
+              <div class="flex flex-col justify-center items-center">
+                <div class="">
+                  <label class="font-semibold text-lg my-auto mr-5">Surah</label>
+                  <select id="surah-list-modal"
+                    class="form-multiselect block w-full mt-1 rounded-md shadow-sm text-center h-10">
+                    <!-- surah list will be added dynamically here -->
+                  </select>
+                </div>
+
+                <!-- translation list -->
+                <div class="flex mt-3">
+                  <div class="">
+                    <label class="font-semibold text-lg mr-2 ml-5 mx-auto">Translation:</label>
+                  </div>
+                  <div>
+                    <select id="language-modal"
+                      class="form-multiselect block w-3/4 rounded-md shadow-sm text-center text-sm h-7">
+                      <option value="Arabic">Arabic</option>
+                      <option value="English Transliteration">English Transliteration</option>
+                      <option value="English">English</option>
+                      <option value="Bengali">Bengali</option>
+                      <option value="Albanian">Albanian</option>
+                      <option value="Azerbaijani">Azerbaijani</option>
+                      <option value="Bosnian">Bosnian</option>
+                      <option value="Bulgarian">Bulgarian</option>
+                      <option value="Chinese">Chinese</option>
+                      <option value="Czech">Czech</option>
+                      <option value="Dutch">Dutch</option>
+                      <option value="Farsi">Farsi</option>
+                      <option value="French">French</option>
+                      <option value="German">German</option>
+                      <option value="Hindi">Hindi</option>
+                      <option value="Indonesian">Indonesian</option>
+                      <option value="Italian">Italian</option>
+                      <option value="Japanese">Japanese</option>
+                      <option value="Korean">Korean</option>
+                      <option value="Malay">Malay</option>
+                      <option value="Norwegian">Norwegian</option>
+                      <option value="Polish">Polish</option>
+                      <option value="Portuguese">Portuguese</option>
+                      <option value="Romanian">Romanian</option>
+                      <option value="Russian">Russian</option>
+                      <option value="Spanish">Spanish</option>
+                      <option value="Swedish">Swedish</option>
+                      <option value="Turkish">Turkish</option>
+                      <option value="Urdu">Urdu</option>
+
+                    </select>
+                  </div>
+                </div>
+
+                <!--ayah selection section  -->
+                <div class="flex fe justify-center  mt-2">
+                  <label class="font-semibold text-lg my-auto ">Ayah:</label>
+                  <select id="ayahs-container-modal"
+                    class="form-multiselect block w-14 lg:w/12 ml-12 rounded-md shadow-sm text-center text-sm h-7">
+                    <!-- Surahs will be added dynamically here -->
+                  </select>
+                </div>
+              </div>
+
+              <!-- dark/normal mode btn -->
+              <div class="">
+                <button id="mode-btn-modal" class="rounded-full px-4 text-xs pb-1 pt-2 mt-2  bg-white"><i
+                    class="fa-regular fa-sun"></i>
+                  <i class="fa-solid fa-arrows-left-right"></i> <i class="fa-regular fa-moon"></i></button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- footer -->
@@ -146,6 +252,9 @@
   <script src="JS/quran.js"></script>
   <script src="JS/indicator.js"></script>
   <script src="JS/darkmode.js"></script>
+  <script src="JS/modal.js"></script>
+  <!-- <script src="JS/open.close.modal.js"></script> -->
+
 
 </body>
 

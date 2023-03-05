@@ -1,0 +1,24 @@
+.modal {
+  transition: opacity 0.05s ease;
+}
+
+.modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-container {
+  max-height: calc(100vh - 100px);
+}
+
+.modal-overlay {
+  transition: opacity 0.25s ease;
+}
+
+.modal.active .modal-overlay {
+  opacity: 1;
+}
+
+select {
+  background-color: white;
+}
