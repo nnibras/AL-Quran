@@ -107,6 +107,7 @@ surahListModal.addEventListener("change", () => {
   surahList.selectedIndex = surahNumber - 1;
   loadAyahListModal(url);
   loadAyahList(url);
+  document.getElementById("ayah-1").scrollIntoView();
 });
 
 // when surah is changed set the main quran page for that surah
