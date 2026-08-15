@@ -1,6 +1,13 @@
 import { loadArabic, loadTranslation, type RawWholeSurah } from "../data/loadQuranData";
 import type { Ayah, SearchMatch, SurahMeta } from "../types";
+import { showsBismillahSeparately, stripEmbeddedBismillah } from "../utils/surah";
 import { DEFAULT_TRANSLATION } from "./editions";
+
+function ayahText(surahNumber: number, numberInSurah: number, text: string): string {
+  return numberInSurah === 1 && showsBismillahSeparately(surahNumber)
+    ? stripEmbeddedBismillah(text)
+    : text;
+}
 
 function buildSurahMeta(surah: RawWholeSurah): SurahMeta {
   return {
@@ -41,7 +48,7 @@ export async function getSurahAyahs(surahNumber: number, translationCode: string
   const ayahs: Ayah[] = surah.ayahs.map((ayah) => ({
     number: ayah.number,
     numberInSurah: ayah.numberInSurah,
-    text: ayah.text,
+    text: ayahText(surah.number, ayah.numberInSurah, ayah.text),
     translation: translationMap?.get(ayah.number) ?? "",
     sajda: Boolean(ayah.sajda),
     page: ayah.page,
@@ -65,7 +72,7 @@ export async function getJuzAyahs(juzNumber: number, translationCode: string): P
       ayahs.push({
         number: ayah.number,
         numberInSurah: ayah.numberInSurah,
-        text: ayah.text,
+        text: ayahText(surah.number, ayah.numberInSurah, ayah.text),
         translation: translationMap?.get(ayah.number) ?? "",
         sajda: Boolean(ayah.sajda),
         page: ayah.page,

@@ -48,9 +48,12 @@ export function AyahCard({ ayah, showSurahLabel }: AyahCardProps) {
       className="scroll-mt-20 border-b border-stone-100 py-8 first:pt-4 last:border-b-0 dark:border-stone-800"
     >
       <div className="mb-4 flex items-center justify-between">
-        <span className="inline-flex h-7 min-w-7 items-center justify-center rounded-full bg-brand-50 px-2 text-xs font-bold text-brand-700 dark:bg-brand-950 dark:text-brand-300">
-          {showSurahLabel ? `${ayah.surah.englishName} ${ayah.numberInSurah}` : ayah.numberInSurah}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="inline-flex h-7 min-w-7 items-center justify-center rounded-full bg-brand-50 px-2 text-xs font-bold text-brand-700 dark:bg-brand-950 dark:text-brand-300">
+            {showSurahLabel ? `${ayah.surah.englishName} ${ayah.numberInSurah}` : ayah.numberInSurah}
+          </span>
+          <span className="text-xs font-medium text-stone-400 dark:text-stone-500">Page {ayah.page}</span>
+        </div>
         <div className="flex items-center gap-1">
           <button
             type="button"
