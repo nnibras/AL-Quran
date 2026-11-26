@@ -6,6 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Read, search and listen to the Noble Quran with translations in 28 languages." />
   <title>Al-Quran</title>
+  <script>
+    // Apply the saved theme before first paint so the app doesn't flash the
+    // default Day theme on launch (useTheme keeps it in sync afterwards).
+    try {
+      var t = JSON.parse(localStorage.getItem("al-quran/preferences") || "{}").state.theme;
+      var c = document.documentElement.classList;
+      if (t && t !== "light" && t !== "system") c.add("dark");
+      if (t === "system" && matchMedia("(prefers-color-scheme: dark)").matches) c.add("dark");
+      if (t === "maroon" || t === "green") c.add("theme-" + t);
+    } catch (e) {}
+  </script>
   <link rel="icon" href="%BASE_URL%quran.png" />
 </head>
 

@@ -10,6 +10,75 @@
   font-display: swap;
 }
 
+/* Color scales consumed by tailwind.config.js (space-separated RGB channels). */
+:root {
+  --stone-50: 250 250 249;
+  --stone-100: 245 245 244;
+  --stone-200: 231 229 228;
+  --stone-300: 214 211 209;
+  --stone-400: 168 162 158;
+  --stone-500: 120 113 108;
+  --stone-600: 87 83 78;
+  --stone-700: 68 64 60;
+  --stone-800: 41 37 36;
+  --stone-900: 28 25 23;
+  --stone-950: 12 10 9;
+  --brand-50: 239 250 246;
+  --brand-100: 215 242 231;
+  --brand-200: 177 228 210;
+  --brand-300: 126 207 182;
+  --brand-400: 75 180 151;
+  --brand-500: 43 154 128;
+  --brand-600: 31 125 105;
+  --brand-700: 28 100 86;
+  --brand-800: 26 80 71;
+  --brand-900: 24 66 59;
+  --brand-950: 9 38 33;
+}
+
+/* "Maroon" theme: applied together with `.dark` so every dark: style
+   picks up maroon surfaces, parchment text and gold accents. */
+.theme-maroon {
+  --stone-50: 251 243 234;
+  --stone-100: 241 225 210;
+  --stone-200: 230 210 191;
+  --stone-300: 217 195 172;
+  --stone-400: 191 162 140;
+  --stone-500: 156 125 114;
+  --stone-600: 122 85 96;
+  --stone-700: 107 54 64;
+  --stone-800: 90 46 55;
+  --stone-900: 77 41 48;
+  --stone-950: 60 19 25;
+  --brand-50: 251 245 230;
+  --brand-100: 245 231 194;
+  --brand-200: 236 212 151;
+  --brand-300: 224 192 114;
+  --brand-400: 212 176 99;
+  --brand-500: 201 165 90;
+  --brand-600: 154 120 53;
+  --brand-700: 125 96 41;
+  --brand-800: 110 83 38;
+  --brand-900: 90 68 34;
+  --brand-950: 58 42 20;
+}
+
+/* "Green" theme: applied with `.dark`; deep green-black surfaces with the
+   default teal-green brand as accent. */
+.theme-green {
+  --stone-50: 247 250 249;
+  --stone-100: 238 243 241;
+  --stone-200: 219 228 225;
+  --stone-300: 194 207 203;
+  --stone-400: 148 166 161;
+  --stone-500: 109 129 124;
+  --stone-600: 76 95 90;
+  --stone-700: 47 64 60;
+  --stone-800: 31 48 44;
+  --stone-900: 20 36 33;
+  --stone-950: 11 21 20;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -27,4 +96,77 @@ html {
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
   @apply bg-stone-300 dark:bg-stone-700 rounded-full;
+}
+
+/* Ornamental frame for the "Maroon" card theme: gold/teal rules with a
+   diamond strip down each side, echoing a mushaf page border. */
+.maroon-frame {
+  position: relative;
+  background-color: #4d2930;
+  box-shadow:
+    inset 0 0 0 2px #c9a55a,
+    inset 0 0 0 5px #1f5f56,
+    inset 0 0 0 7px #c9a55a;
+}
+.maroon-frame::before,
+.maroon-frame::after {
+  content: "";
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  width: 12px;
+  background-color: #1f5f56;
+  background-image:
+    linear-gradient(135deg, #c9a55a 25%, transparent 25%),
+    linear-gradient(225deg, #c9a55a 25%, transparent 25%),
+    linear-gradient(315deg, #c9a55a 25%, transparent 25%),
+    linear-gradient(45deg, #c9a55a 25%, transparent 25%);
+  background-position: -6px 0, -6px 0, 0 0, 0 0;
+  background-size: 12px 12px;
+  border-left: 1px solid #c9a55a;
+  border-right: 1px solid #c9a55a;
+}
+.maroon-frame::before {
+  left: 7px;
+}
+.maroon-frame::after {
+  right: 7px;
+}
+
+/* Surah title frame in Book view: double rule + diamond ornaments, themed via
+   --banner-accent / --banner-bg so it is clearly visible in every theme. */
+.surah-banner {
+  --banner-accent: rgb(var(--brand-600));
+  --banner-bg: rgb(var(--brand-50));
+  position: relative;
+  border-radius: 0.75rem;
+  background: var(--banner-bg);
+  border: 2px solid var(--banner-accent);
+  box-shadow:
+    inset 0 0 0 3px var(--banner-bg),
+    inset 0 0 0 4px var(--banner-accent);
+}
+.dark .surah-banner {
+  --banner-accent: rgb(var(--brand-400));
+  --banner-bg: rgb(var(--stone-900));
+}
+.theme-maroon .surah-banner {
+  --banner-accent: #c9a55a;
+  --banner-bg: #46222a;
+}
+.surah-banner::before,
+.surah-banner::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--banner-accent);
+  transform: translateY(-50%) rotate(45deg);
+}
+.surah-banner::before {
+  left: 16px;
+}
+.surah-banner::after {
+  right: 16px;
 }

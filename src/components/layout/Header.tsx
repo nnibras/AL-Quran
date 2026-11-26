@@ -1,3 +1,4 @@
+import { useUiStore } from "../../store/useUiStore";
 import { IconMenu } from "../common/Icons";
 
 interface HeaderProps {
@@ -5,8 +6,14 @@ interface HeaderProps {
 }
 
 export function Header({ onMenuClick }: HeaderProps) {
+  const hidden = useUiStore((s) => s.chromeHidden);
+
   return (
-    <header className="sticky top-0 z-30 relative flex items-center justify-center border-b border-stone-200 bg-white/80 px-4 py-3 backdrop-blur lg:hidden dark:border-stone-800 dark:bg-stone-900/80">
+    <header
+      className={`sticky top-0 z-30 flex h-12 items-center justify-center border-b border-stone-200 bg-white/80 px-4 backdrop-blur transition-transform duration-200 lg:hidden dark:border-stone-800 dark:bg-stone-900/80 ${
+        hidden ? "-translate-y-full" : ""
+      }`}
+    >
       <button
         type="button"
         onClick={onMenuClick}

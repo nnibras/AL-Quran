@@ -5,15 +5,17 @@ interface Option {
   label: string;
 }
 
-interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "value" | "onChange"> {
+interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, "value" | "onChange" | "size"> {
   label: string;
   value: string;
   options: Option[];
   onChange: (value: string) => void;
   hideLabel?: boolean;
+  /** "sm" is the compact variant used in the reader toolbar. */
+  size?: "md" | "sm";
 }
 
-export function Select({ label, value, options, onChange, hideLabel, id, ...rest }: SelectProps) {
+export function Select({ label, value, options, onChange, hideLabel, size = "md", id, ...rest }: SelectProps) {
   const selectId = id ?? label.toLowerCase().replace(/\s+/g, "-");
   return (
     <div className="flex flex-col gap-1">
@@ -24,7 +26,9 @@ export function Select({ label, value, options, onChange, hideLabel, id, ...rest
         id={selectId}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 shadow-sm transition focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100"
+        className={`w-full rounded-lg border border-stone-300 bg-white text-stone-900 shadow-sm transition ${
+          size === "sm" ? "h-8 px-2 py-0 text-xs" : "px-3 py-2 text-sm"
+        } focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100`}
         {...rest}
       >
         {options.map((opt) => (
