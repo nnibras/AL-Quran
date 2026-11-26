@@ -53,6 +53,18 @@ export const usePreferencesStore = create<PreferencesState>()(
         set((state) => ({ lastRead: { ...state.lastRead, [kind]: number, mostRecent: kind } })),
       setSkipResumePrompt: (skip) => set({ skipResumePrompt: skip }),
     }),
-    { name: "al-quran/preferences" }
+    {
+      name: "al-quran/preferences",
+      version: 1,
+      // v0 had a "system" theme option, which no longer exists.
+      migrate: (persisted, version) => {
+        const state = persisted as Omit<Partial<PreferencesState>, "theme"> & { theme?: string };
+        if (version < 1 && state.theme === "system") {
+          state.theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        delete (state as { readingTheme?: unknown }).readingTheme;
+        return state as PreferencesState;
+      },
+    }
   )
 );

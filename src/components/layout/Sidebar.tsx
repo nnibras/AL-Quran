@@ -126,7 +126,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
         </div>
       </div>
 
-      <div className="mt-auto border-t border-stone-200 pt-5 dark:border-stone-800">
+      <div className="mt-auto border-t border-stone-200 pt-2 dark:border-stone-800">
         <FooterCredits />
       </div>
     </div>

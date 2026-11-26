@@ -41,7 +41,8 @@ export interface SearchMatch {
   };
 }
 
-export type Theme = "light" | "dark" | "system";
+/** App color theme. "dark", "maroon" and "green" all render in Tailwind dark mode. */
+export type Theme = "light" | "dark" | "maroon" | "green";
 
 export interface Bookmark {
   surahNumber: number;

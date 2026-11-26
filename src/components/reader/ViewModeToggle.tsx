@@ -15,7 +15,7 @@ export function ViewModeToggle() {
     <div
       role="group"
       aria-label="Reading view"
-      className="flex items-center gap-1 rounded-full border border-stone-200 bg-stone-100 p-1 dark:border-stone-800 dark:bg-stone-900"
+      className="flex items-center gap-0.5 rounded-full border border-stone-200 bg-stone-100 p-0.5 dark:border-stone-800 dark:bg-stone-900"
     >
       {OPTIONS.map(({ mode, label, Icon }) => (
         <button
@@ -23,14 +23,16 @@ export function ViewModeToggle() {
           type="button"
           onClick={() => setViewMode(mode)}
           aria-pressed={viewMode === mode}
-          className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+          aria-label={`${label} view`}
+          title={`${label} view`}
+          className={`flex h-7 items-center gap-1.5 rounded-full px-2.5 text-xs font-semibold transition ${
             viewMode === mode
               ? "bg-white text-brand-700 shadow-sm dark:bg-stone-800 dark:text-brand-300"
               : "text-stone-500 hover:text-stone-800 dark:text-stone-400 dark:hover:text-stone-200"
           }`}
         >
           <Icon className="h-3.5 w-3.5" />
-          {label}
+          <span className="hidden sm:inline">{label}</span>
         </button>
       ))}
     </div>

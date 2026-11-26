@@ -7,6 +7,7 @@ import { ErrorState } from "../components/common/ErrorState";
 import { ReaderSkeleton } from "../components/reader/ReaderSkeleton";
 import { ReaderToolbar } from "../components/reader/ReaderToolbar";
 import { ViewModeToggle } from "../components/reader/ViewModeToggle";
+import { CardsContainer } from "../components/reader/CardsContainer";
 import { useAsyncData } from "../hooks/useAsyncData";
 import { usePreferencesStore } from "../store/usePreferencesStore";
 
@@ -20,6 +21,7 @@ export function JuzPage() {
   const translation = usePreferencesStore((s) => s.translation);
   const setLastRead = usePreferencesStore((s) => s.setLastRead);
   const viewMode = usePreferencesStore((s) => s.viewMode);
+  const maroonTheme = usePreferencesStore((s) => s.theme === "maroon");
 
   const { data: ayahs, loading, error, retry } = useAsyncData(
     () => getJuzAyahs(juzNumber, translation),
@@ -68,14 +70,18 @@ export function JuzPage() {
           {viewMode === "book" ? (
             <BookView ayahs={ayahs} />
           ) : (
-            <div className="px-4 sm:px-8">
+            <CardsContainer>
               {ayahs.map((ayah) => {
                 const isNewSurah = ayah.surah.number !== lastSurahNumber;
                 lastSurahNumber = ayah.surah.number;
                 return (
                   <div key={ayah.number}>
                     {isNewSurah && (
-                      <h2 className="pt-8 text-center text-sm font-semibold uppercase tracking-wide text-brand-600 dark:text-brand-400">
+                      <h2
+                        className={`pt-8 text-center text-sm font-semibold uppercase tracking-wide ${
+                          maroonTheme ? "text-parchment-gold" : "text-brand-600 dark:text-brand-400"
+                        }`}
+                      >
                         {ayah.surah.englishName}
                       </h2>
                     )}
@@ -83,7 +89,7 @@ export function JuzPage() {
                   </div>
                 );
               })}
-            </div>
+            </CardsContainer>
           )}
         </>
       )}

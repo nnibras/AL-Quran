@@ -1,3 +1,7 @@
+const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
+const scale = (name) =>
+  Object.fromEntries(SHADES.map((n) => [n, `rgb(var(--${name}-${n}) / <alpha-value>)`]));
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: "class",
@@ -8,21 +12,23 @@ export default {
         arabic: ["Kitab", "Traditional Arabic", "serif"],
       },
       colors: {
-        // A calm, deep teal-green — evokes manuscript/mosque-tile greens rather
-        // than a generic SaaS blue, and pairs with the warm stone neutrals and
-        // amber/parchment tones used in the Book view.
-        brand: {
-          50: "#effaf6",
-          100: "#d7f2e7",
-          200: "#b1e4d2",
-          300: "#7ecfb6",
-          400: "#4bb497",
-          500: "#2b9a80",
-          600: "#1f7d69",
-          700: "#1c6456",
-          800: "#1a5047",
-          900: "#18423b",
-          950: "#092621",
+        // Both scales are driven by CSS variables (see index.css) so a reading
+        // theme such as "maroon" can re-skin the whole app by swapping them.
+        // Defaults: Tailwind's stone + a calm, deep teal-green brand that evokes
+        // manuscript/mosque-tile greens rather than a generic SaaS blue.
+        stone: scale("stone"),
+        brand: scale("brand"),
+        // Deep maroon + parchment palette for the optional "Maroon" card theme.
+        maroon: {
+          600: "#6b3640",
+          700: "#4d2930",
+          800: "#46222a",
+          900: "#3c1319",
+        },
+        parchment: {
+          100: "#f1e1d2",
+          300: "#d9c3ac",
+          gold: "#c9a55a",
         },
       },
       keyframes: {

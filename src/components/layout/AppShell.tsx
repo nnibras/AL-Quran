@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import { useHideOnScroll } from "../../hooks/useHideOnScroll";
 import { useTheme } from "../../hooks/useTheme";
 import { AudioBar } from "../reader/AudioBar";
 import { Header } from "./Header";
@@ -8,6 +9,7 @@ import { Sidebar } from "./Sidebar";
 
 export function AppShell() {
   useTheme();
+  useHideOnScroll();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
