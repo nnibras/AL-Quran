@@ -77,6 +77,14 @@ export function IconChevronLeft(props: IconProps) {
   );
 }
 
+export function IconChevronDown(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <polyline points="4 9 12 17 20 9" />
+    </svg>
+  );
+}
+
 export function IconChevronRight(props: IconProps) {
   return (
     <svg {...base} {...props}>
