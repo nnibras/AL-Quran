@@ -1,9 +1,9 @@
 import { loadArabic, loadTranslation, type RawWholeSurah } from "../data/loadQuranData";
-import type { Ayah, SearchMatch, SurahMeta } from "../types";
+import type { Ayah, SurahMeta } from "../types";
 import { showsBismillahSeparately, stripEmbeddedBismillah } from "../utils/surah";
-import { DEFAULT_TRANSLATION } from "./editions";
 
-function ayahText(surahNumber: number, numberInSurah: number, text: string): string {
+/** Ayah text as displayed (the bismillah embedded in ayah 1 is shown separately for most surahs). */
+export function ayahText(surahNumber: number, numberInSurah: number, text: string): string {
   return numberInSurah === 1 && showsBismillahSeparately(surahNumber)
     ? stripEmbeddedBismillah(text)
     : text;
@@ -82,25 +82,4 @@ export async function getJuzAyahs(juzNumber: number, translationCode: string): P
     }
   }
   return ayahs;
-}
-
-export async function searchQuran(keyword: string, translationCode: string): Promise<SearchMatch[]> {
-  const needle = keyword.trim().toLowerCase();
-  if (!needle) return [];
-
-  const surahs = await loadTranslation(translationCode || DEFAULT_TRANSLATION);
-  const matches: SearchMatch[] = [];
-  for (const surah of surahs) {
-    for (const ayah of surah.ayahs) {
-      if (ayah.text.toLowerCase().includes(needle)) {
-        matches.push({
-          number: ayah.number,
-          numberInSurah: ayah.numberInSurah,
-          text: ayah.text,
-          surah: { number: surah.number, englishName: surah.englishName, name: surah.name },
-        });
-      }
-    }
-  }
-  return matches;
 }

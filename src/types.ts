@@ -30,17 +30,6 @@ export interface Edition {
   label: string;
 }
 
-export interface SearchMatch {
-  number: number;
-  numberInSurah: number;
-  text: string;
-  surah: {
-    number: number;
-    englishName: string;
-    name: string;
-  };
-}
-
 /** App color theme. "dark", "maroon" and "green" all render in Tailwind dark mode. */
 export type Theme = "light" | "dark" | "maroon" | "green";
 
