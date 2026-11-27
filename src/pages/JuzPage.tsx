@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useLayoutEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getJuzAyahs } from "../api/quran";
 import { AyahCard } from "../components/reader/AyahCard";
@@ -10,6 +10,8 @@ import { ViewModeToggle } from "../components/reader/ViewModeToggle";
 import { CardsContainer } from "../components/reader/CardsContainer";
 import { useAsyncData } from "../hooks/useAsyncData";
 import { usePreferencesStore } from "../store/usePreferencesStore";
+import { useUiStore } from "../store/useUiStore";
+import { scrollToAyah } from "../utils/readingPosition";
 
 const TOTAL_JUZ = 30;
 
@@ -31,6 +33,15 @@ export function JuzPage() {
   useEffect(() => {
     if (ayahs) setLastRead("juz", juzNumber);
   }, [ayahs, juzNumber, setLastRead]);
+
+  // After switching Cards ⇄ Book, show the ayah that was being read.
+  const keepAyah = useUiStore((s) => s.keepAyah);
+  const setKeepAyah = useUiStore((s) => s.setKeepAyah);
+  useLayoutEffect(() => {
+    if (!keepAyah || !ayahs) return;
+    setKeepAyah(null);
+    scrollToAyah(keepAyah);
+  }, [keepAyah, ayahs, viewMode, setKeepAyah]);
 
   const options = useMemo(
     () => Array.from({ length: TOTAL_JUZ }, (_, i) => ({ value: String(i + 1), label: `Juz ${i + 1}` })),

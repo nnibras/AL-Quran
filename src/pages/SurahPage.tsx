@@ -17,6 +17,8 @@ import { useAsyncData } from "../hooks/useAsyncData";
 import { useAdjacentSurahs } from "../hooks/useAdjacentSurahs";
 import { useSurahList } from "../hooks/useSurahList";
 import { usePreferencesStore } from "../store/usePreferencesStore";
+import { useUiStore } from "../store/useUiStore";
+import { scrollToAyah } from "../utils/readingPosition";
 
 const TOTAL_SURAHS = 114;
 
@@ -79,6 +81,24 @@ export function SurahPage() {
     }
   }, [preceding.length]);
 
+  // After switching Cards ⇄ Book, show the ayah that was being read. Cards view
+  // only holds the opened surah, so if Book view had scrolled on into another
+  // surah, open that one at the ayah instead.
+  const keepAyah = useUiStore((s) => s.keepAyah);
+  const setKeepAyah = useUiStore((s) => s.setKeepAyah);
+  useLayoutEffect(() => {
+    if (!keepAyah || !data) return;
+    setKeepAyah(null);
+    // At a surah's first ayah, Cards view opens at the very top so its header shows.
+    const atStart = keepAyah.ayah === 1 && !isBook;
+    if (keepAyah.surah !== surahNumber && !isBook) {
+      navigate(atStart ? `/surah/${keepAyah.surah}` : `/surah/${keepAyah.surah}?ayah=${keepAyah.ayah}`, { replace: true });
+      return;
+    }
+    if (atStart) window.scrollTo({ top: 0, behavior: "instant" });
+    else scrollToAyah(keepAyah);
+  }, [keepAyah, data, isBook, surahNumber, navigate, setKeepAyah]);
+
   // We restore the position ourselves, so the browser's own scroll anchoring
   // must not adjust it a second time.
   useEffect(() => {
@@ -133,9 +153,7 @@ export function SurahPage() {
     // Instant (not smooth): a surah may be inserted above right after, and a
     // smooth scroll would keep heading for the old, now-shifted position.
     requestAnimationFrame(() => {
-      document
-        .getElementById(`ayah-${surahNumber}-${targetAyah}`)
-        ?.scrollIntoView({ block: "start", behavior: "instant" });
+      scrollToAyah({ surah: surahNumber, ayah: Number(targetAyah) });
     });
   }, [data, searchParams, surahNumber]);
 

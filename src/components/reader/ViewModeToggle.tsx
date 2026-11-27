@@ -1,4 +1,6 @@
 import { usePreferencesStore } from "../../store/usePreferencesStore";
+import { useUiStore } from "../../store/useUiStore";
+import { readingAyah } from "../../utils/readingPosition";
 import type { ViewMode } from "../../store/usePreferencesStore";
 import { IconBook, IconLayers } from "../common/Icons";
 
@@ -10,6 +12,15 @@ const OPTIONS: { mode: ViewMode; label: string; Icon: typeof IconBook }[] = [
 export function ViewModeToggle() {
   const viewMode = usePreferencesStore((s) => s.viewMode);
   const setViewMode = usePreferencesStore((s) => s.setViewMode);
+  const setKeepAyah = useUiStore((s) => s.setKeepAyah);
+
+  // Remember the ayah being read so the other view opens at the same place
+  // (the page consumes it; see SurahPage/JuzPage).
+  const choose = (mode: ViewMode) => {
+    if (mode === viewMode) return;
+    setKeepAyah(readingAyah());
+    setViewMode(mode);
+  };
 
   return (
     <div
@@ -21,7 +32,7 @@ export function ViewModeToggle() {
         <button
           key={mode}
           type="button"
-          onClick={() => setViewMode(mode)}
+          onClick={() => choose(mode)}
           aria-pressed={viewMode === mode}
           aria-label={`${label} view`}
           title={`${label} view`}
