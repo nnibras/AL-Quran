@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Calls `onVisible` when this (invisible) element comes within `margin` of the
- * viewport. Remount it (change its `key`) to re-check after new content loads.
+ * Calls `onVisible` when this (invisible) element comes within `margin` px of
+ * the viewport, above or below — so it works at either end of a list.
+ * Remount it (change its `key`) to re-check after new content loads.
  */
 export function LoadMoreSentinel({ onVisible, margin = 1200 }: { onVisible: () => void; margin?: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -16,7 +17,7 @@ export function LoadMoreSentinel({ onVisible, margin = 1200 }: { onVisible: () =
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) callback.current();
       },
-      { rootMargin: `0px 0px ${margin}px 0px` }
+      { rootMargin: `${margin}px 0px ${margin}px 0px` }
     );
     observer.observe(el);
     return () => observer.disconnect();
