@@ -65,11 +65,14 @@ function parseReference(query: string, surahs: SurahMeta[] | null) {
 function ResultCard({
   hit,
   terms,
+  exact,
   filter,
   preferred,
 }: {
   hit: SearchHit;
   terms: string[];
+  /** Exact-match pattern (highlight the whole phrase), or null to highlight each word. */
+  exact: string | null;
   filter: string;
   preferred: string;
 }) {
@@ -78,7 +81,7 @@ function ResultCard({
   if (!ref) return null;
 
   const arabicMatched = hit.editions.includes(ARABIC);
-  const arabicView = snippet(arabic, arabicMatched ? highlightRanges(arabic, terms, true) : [], 180);
+  const arabicView = snippet(arabic, arabicMatched ? highlightRanges(arabic, terms, true, exact ?? undefined) : [], 180);
 
   // Which translation line to show: the filtered language, else the best match, else the reader's own.
   const matchedTranslations = hit.editions.filter((e) => e !== ARABIC);
@@ -88,7 +91,7 @@ function ResultCard({
       : matchedTranslations[0] ?? (preferred && readyEdition(preferred) ? preferred : null);
   const translationMatched = translationCode ? hit.editions.includes(translationCode) : false;
   const translation = translationCode ? readyEdition(translationCode)?.text[hit.ayahNumber - 1] ?? "" : "";
-  const translationView = snippet(translation, translationMatched ? highlightRanges(translation, terms) : []);
+  const translationView = snippet(translation, translationMatched ? highlightRanges(translation, terms, false, exact ?? undefined) : []);
 
   const tags = hit.editions.map(editionLabel);
 
@@ -147,6 +150,7 @@ function ResultCard({
 export function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(() => searchParams.get("q") ?? "");
+  const [exactOnly, setExactOnly] = useState(() => searchParams.get("exact") === "1");
   const debouncedQuery = useDebouncedValue(query, 300);
   const translation = usePreferencesStore((s) => s.translation);
   const { surahs } = useSurahList();
@@ -160,11 +164,14 @@ export function SearchPage() {
   const [visible, setVisible] = useState(PAGE_SIZE);
   const requestId = useRef(0);
 
-  // Keep the query in the URL so "back" from a result returns to the same search.
+  // Keep the query (and exact mode) in the URL so "back" from a result returns to the same search.
   useEffect(() => {
     const q = debouncedQuery.trim();
-    if ((searchParams.get("q") ?? "") !== q) setSearchParams(q ? { q } : {}, { replace: true });
-  }, [debouncedQuery, searchParams, setSearchParams]);
+    const want = new URLSearchParams();
+    if (q) want.set("q", q);
+    if (exactOnly) want.set("exact", "1");
+    if (want.toString() !== searchParams.toString()) setSearchParams(want, { replace: true });
+  }, [debouncedQuery, exactOnly, searchParams, setSearchParams]);
 
   useEffect(() => {
     const id = ++requestId.current;
@@ -187,11 +194,12 @@ export function SearchPage() {
         if (p.searched.length > 0 || p.done) setProgress(p);
         if (p.done) setSearching(false);
       },
-      () => id !== requestId.current
+      () => id !== requestId.current,
+      { exact: exactOnly }
     ).catch(() => {
       if (id === requestId.current) setSearching(false);
     });
-  }, [debouncedQuery, translation]);
+  }, [debouncedQuery, translation, exactOnly]);
 
   const surahMatches = useMemo(
     () => (surahs ? matchSurahs(surahs, debouncedQuery) : []),
@@ -230,6 +238,26 @@ export function SearchPage() {
           className="w-full rounded-xl border border-stone-300 bg-white py-3 pl-10 pr-4 text-sm shadow-sm focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30 dark:border-stone-700 dark:bg-stone-900"
         />
       </div>
+
+      <label className="mt-3 flex cursor-pointer select-none items-center gap-2.5 text-sm text-stone-600 dark:text-stone-300">
+        <input
+          type="checkbox"
+          role="switch"
+          checked={exactOnly}
+          onChange={(e) => setExactOnly(e.target.checked)}
+          className="peer sr-only"
+        />
+        <span
+          aria-hidden="true"
+          className="relative h-5 w-9 shrink-0 rounded-full bg-stone-300 transition peer-checked:bg-brand-600 peer-focus-visible:ring-2 peer-focus-visible:ring-brand-500/40 dark:bg-stone-700 after:absolute after:left-0.5 after:top-0.5 after:h-4 after:w-4 after:rounded-full after:bg-white after:shadow after:transition peer-checked:after:translate-x-4"
+        />
+        <span>
+          <span className="font-medium">Exact match</span>
+          <span className="ml-1.5 text-xs text-stone-400 dark:text-stone-500">
+            {exactOnly ? "whole words, in this order" : "off: all words, any order"}
+          </span>
+        </span>
+      </label>
 
       {reference && (
         <Link
@@ -281,7 +309,8 @@ export function SearchPage() {
               ) : (
                 progress && (
                   <>
-                    {hits.length.toLocaleString()} ayah{hits.length === 1 ? "" : "s"} · {progress.editions.length}{" "}
+                    {hits.length.toLocaleString()} ayah{hits.length === 1 ? "" : "s"}
+                    {progress.exact ? " · exact" : ""} · {progress.editions.length}{" "}
                     {progress.editions.length === 1 ? "edition" : "editions"} in {progress.script}
                   </>
                 )
@@ -327,7 +356,14 @@ export function SearchPage() {
           {filtered.length > 0 && (
             <ul className={`mt-3 space-y-2 transition-opacity ${stale ? "opacity-50" : ""}`}>
               {filtered.slice(0, visible).map((hit) => (
-                <ResultCard key={hit.ayahNumber} hit={hit} terms={terms} filter={filter} preferred={translation} />
+                <ResultCard
+                  key={hit.ayahNumber}
+                  hit={hit}
+                  terms={terms}
+                  exact={progress?.exact ?? null}
+                  filter={filter}
+                  preferred={translation}
+                />
               ))}
             </ul>
           )}

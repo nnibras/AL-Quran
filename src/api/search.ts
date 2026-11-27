@@ -1,5 +1,5 @@
 import { loadArabic, loadTranslation } from "../data/loadQuranData";
-import { matchesAllTerms, normalizeForSearch, searchTerms } from "../utils/searchText";
+import { exactPattern, matchesAllTerms, normalizeForSearch, searchTerms } from "../utils/searchText";
 import { TRANSLATIONS } from "./editions";
 import { ayahText } from "./quran";
 
@@ -149,6 +149,8 @@ export interface SearchHit {
 
 export interface SearchProgress {
   terms: string[];
+  /** Set in exact-match mode: regex source of the phrase (see exactPattern), for highlighting. */
+  exact: string | null;
   script: string;
   /** All editions being searched, in order. */
   editions: string[];
@@ -162,16 +164,22 @@ export interface SearchProgress {
  * Searches every edition relevant to `query`, calling `onProgress` after each
  * one so results can be shown while the rest are still loading. Stops quietly
  * once `isCancelled()` returns true (e.g. the user kept typing).
+ *
+ * Default: every word must appear, in any order (exact phrases rank first).
+ * `exact`: only the words as an exact phrase, whole words only.
  */
 export async function runGlobalSearch(
   query: string,
   preferredTranslation: string,
   onProgress: (progress: SearchProgress) => void,
-  isCancelled: () => boolean
+  isCancelled: () => boolean,
+  options: { exact?: boolean } = {}
 ): Promise<void> {
   const terms = searchTerms(query);
   const { script, editions } = editionsForQuery(query, preferredTranslation);
-  const progress: SearchProgress = { terms, script, editions, searched: [], failed: [], hits: [], done: false };
+  const exact = options.exact && terms.length ? exactPattern(terms) : null;
+  const exactRe = exact ? new RegExp(exact, "u") : null;
+  const progress: SearchProgress = { terms, exact, script, editions, searched: [], failed: [], hits: [], done: false };
   if (!terms.length) {
     onProgress({ ...progress, done: true });
     return;
@@ -185,6 +193,9 @@ export async function runGlobalSearch(
   onProgress({ ...progress });
 
   const phrase = terms.join(" ");
+  // Cheap all-words check first; the exact-phrase regex only runs on candidates.
+  const matches = (text: string | undefined) =>
+    text !== undefined && matchesAllTerms(text, terms) && (!exactRe || exactRe.test(text));
   const found = new Map<number, { editions: string[]; exact: boolean }>();
   for (const code of editions) {
     let data: EditionData;
@@ -198,8 +209,8 @@ export async function runGlobalSearch(
 
     const { norm, normAlt } = data;
     for (let i = 0; i < norm.length; i++) {
-      if (matchesAllTerms(norm[i], terms) || (normAlt && matchesAllTerms(normAlt[i], terms))) {
-        const exact = terms.length > 1 && (norm[i].includes(phrase) || Boolean(normAlt?.[i].includes(phrase)));
+      if (matches(norm[i]) || matches(normAlt?.[i])) {
+        const exact = Boolean(exactRe) || (terms.length > 1 && (norm[i].includes(phrase) || Boolean(normAlt?.[i].includes(phrase))));
         const entry = found.get(i + 1);
         if (entry) {
           entry.editions.push(code);
