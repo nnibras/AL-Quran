@@ -29,16 +29,6 @@ npm run preview   # preview the production build locally
 
 The build output in `dist/` is a fully static, self-contained site (relative asset paths, hash-based routing, no environment variables or server required), so it can be deployed anywhere.
 
-**Netlify — drag and drop:**
-
-1. `npm run build`
-2. Drag the generated `dist/` folder onto [app.netlify.com/drop](https://app.netlify.com/drop)
-
-That's it — no build configuration needed on Netlify's side. (A `netlify.toml`/`_redirects` aren't required since routing uses URL hashes, but a `public/_redirects` is included anyway for robustness if you later connect this repo to Netlify's git-based builds.)
-
-**GitHub Pages:**
-
-A workflow at `.github/workflows/deploy.yml` builds and publishes `dist/` to GitHub Pages automatically on every push to `main`. Enable it once under the repo's **Settings → Pages → Source: GitHub Actions**.
 
 ## Tech stack
 
