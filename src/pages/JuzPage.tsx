@@ -44,7 +44,7 @@ export function JuzPage() {
   let lastSurahNumber = -1;
 
   return (
-    <div className="mx-auto max-w-3xl">
+    <div>
       <ReaderToolbar
         label="Juz"
         current={juzNumber}
@@ -55,44 +55,47 @@ export function JuzPage() {
         <ViewModeToggle />
       </ReaderToolbar>
 
-      {loading && <ReaderSkeleton />}
-      {error && !loading && (
-        <div className="px-4 py-10 sm:px-8">
-          <ErrorState message={error} onRetry={retry} />
-        </div>
-      )}
-      {ayahs && !loading && !error && (
-        <>
-          <div className="border-b border-stone-100 px-4 py-6 text-center sm:px-8 dark:border-stone-800">
-            <h1 className="text-xl font-bold text-stone-800 dark:text-stone-100">Juz {juzNumber}</h1>
-            {range && <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">{range}</p>}
+      <div className="mx-auto max-w-3xl">
+
+        {loading && <ReaderSkeleton />}
+        {error && !loading && (
+          <div className="px-4 py-10 sm:px-8">
+            <ErrorState message={error} onRetry={retry} />
           </div>
-          {viewMode === "book" ? (
-            <BookView ayahs={ayahs} />
-          ) : (
-            <CardsContainer>
-              {ayahs.map((ayah) => {
-                const isNewSurah = ayah.surah.number !== lastSurahNumber;
-                lastSurahNumber = ayah.surah.number;
-                return (
-                  <div key={ayah.number}>
-                    {isNewSurah && (
-                      <h2
-                        className={`pt-8 text-center text-sm font-semibold uppercase tracking-wide ${
-                          maroonTheme ? "text-parchment-gold" : "text-brand-600 dark:text-brand-400"
-                        }`}
-                      >
-                        {ayah.surah.englishName}
-                      </h2>
-                    )}
-                    <AyahCard ayah={ayah} />
-                  </div>
-                );
-              })}
-            </CardsContainer>
-          )}
-        </>
-      )}
+        )}
+        {ayahs && !loading && !error && (
+          <>
+            <div className="border-b border-stone-100 px-4 py-6 text-center sm:px-8 dark:border-stone-800">
+              <h1 className="text-xl font-bold text-stone-800 dark:text-stone-100">Juz {juzNumber}</h1>
+              {range && <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">{range}</p>}
+            </div>
+            {viewMode === "book" ? (
+              <BookView ayahs={ayahs} />
+            ) : (
+              <CardsContainer>
+                {ayahs.map((ayah) => {
+                  const isNewSurah = ayah.surah.number !== lastSurahNumber;
+                  lastSurahNumber = ayah.surah.number;
+                  return (
+                    <div key={ayah.number}>
+                      {isNewSurah && (
+                        <h2
+                          className={`pt-8 text-center text-sm font-semibold uppercase tracking-wide ${
+                            maroonTheme ? "text-parchment-gold" : "text-brand-600 dark:text-brand-400"
+                          }`}
+                        >
+                          {ayah.surah.englishName}
+                        </h2>
+                      )}
+                      <AyahCard ayah={ayah} />
+                    </div>
+                  );
+                })}
+              </CardsContainer>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
