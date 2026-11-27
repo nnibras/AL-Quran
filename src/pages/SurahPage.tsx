@@ -15,7 +15,6 @@ import { ErrorState } from "../components/common/ErrorState";
 import { Select } from "../components/common/Select";
 import { useAsyncData } from "../hooks/useAsyncData";
 import { useAdjacentSurahs } from "../hooks/useAdjacentSurahs";
-import { ignoreNextScrollJump } from "../hooks/useHideOnScroll";
 import { useSurahList } from "../hooks/useSurahList";
 import { usePreferencesStore } from "../store/usePreferencesStore";
 
@@ -76,7 +75,6 @@ export function SurahPage() {
     // "instant": the page-wide `scroll-behavior: smooth` would otherwise animate
     // this correction, and a second insertion mid-animation loses the position.
     if (mark) {
-      ignoreNextScrollJump();
       window.scrollBy({ top: mark.getBoundingClientRect().top - anchor.top, behavior: "instant" });
     }
   }, [preceding.length]);
@@ -125,7 +123,6 @@ export function SurahPage() {
   // (A requested ?ayah= is handled below instead.)
   useEffect(() => {
     if (searchParams.get("ayah")) return;
-    ignoreNextScrollJump();
     window.scrollTo({ top: 0, behavior: "instant" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [surahNumber]);
@@ -136,7 +133,6 @@ export function SurahPage() {
     // Instant (not smooth): a surah may be inserted above right after, and a
     // smooth scroll would keep heading for the old, now-shifted position.
     requestAnimationFrame(() => {
-      ignoreNextScrollJump();
       document
         .getElementById(`ayah-${surahNumber}-${targetAyah}`)
         ?.scrollIntoView({ block: "start", behavior: "instant" });
@@ -157,7 +153,6 @@ export function SurahPage() {
   // neighbouring surah is inserted above mid-animation.
   const jumpTo = (el: Element | null) => {
     if (!el) return false;
-    ignoreNextScrollJump();
     el.scrollIntoView({ block: "start", behavior: "instant" });
     return true;
   };
@@ -177,7 +172,7 @@ export function SurahPage() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl">
+    <div>
       <ReaderToolbar
         label="Surah"
         current={visibleSurah}
@@ -209,55 +204,58 @@ export function SurahPage() {
         <ViewModeToggle />
       </ReaderToolbar>
 
-      {(loading || (!data && !error)) && <ReaderSkeleton />}
-      {error && !loading && (
-        <div className="px-4 py-10 sm:px-8">
-          <ErrorState message={error} onRetry={retry} />
-        </div>
-      )}
-      {data && !loading && !error && (
-        <>
-          {isBook ? (
-            <>
-              {/* Fixed-height slot so showing the spinner doesn't shift the page. */}
-              {(hasPrevious || previousError) && (
-                <div className="flex min-h-12 items-end justify-center px-4 sm:px-8">
-                  {previousError ? (
-                    <div className="w-full pt-6">
-                      <ErrorState message={previousError} onRetry={retryPrevious} />
-                    </div>
-                  ) : loadingPrevious ? (
+      <div className="mx-auto max-w-3xl">
+
+        {(loading || (!data && !error)) && <ReaderSkeleton />}
+        {error && !loading && (
+          <div className="px-4 py-10 sm:px-8">
+            <ErrorState message={error} onRetry={retry} />
+          </div>
+        )}
+        {data && !loading && !error && (
+          <>
+            {isBook ? (
+              <>
+                {/* Fixed-height slot so showing the spinner doesn't shift the page. */}
+                {(hasPrevious || previousError) && (
+                  <div className="flex min-h-12 items-end justify-center px-4 sm:px-8">
+                    {previousError ? (
+                      <div className="w-full pt-6">
+                        <ErrorState message={previousError} onRetry={retryPrevious} />
+                      </div>
+                    ) : loadingPrevious ? (
+                      <Spinner />
+                    ) : (
+                      <LoadMoreSentinel key={`prev-${preceding.length}`} onVisible={loadPrevious} margin={600} />
+                    )}
+                  </div>
+                )}
+                <BookView ayahs={bookAyahs} />
+                {nextError ? (
+                  <div className="px-4 pb-10 sm:px-8">
+                    <ErrorState message={nextError} onRetry={retryNext} />
+                  </div>
+                ) : loadingNext ? (
+                  <div className="flex justify-center pb-10">
                     <Spinner />
-                  ) : (
-                    <LoadMoreSentinel key={`prev-${preceding.length}`} onVisible={loadPrevious} margin={600} />
-                  )}
-                </div>
-              )}
-              <BookView ayahs={bookAyahs} />
-              {nextError ? (
-                <div className="px-4 pb-10 sm:px-8">
-                  <ErrorState message={nextError} onRetry={retryNext} />
-                </div>
-              ) : loadingNext ? (
-                <div className="flex justify-center pb-10">
-                  <Spinner />
-                </div>
-              ) : (
-                hasMore && <LoadMoreSentinel key={`next-${following.length}`} onVisible={loadNext} />
-              )}
-            </>
-          ) : (
-            <>
-              <SurahHeader meta={data.meta} sajdaCount={sajdaCount} />
-              <CardsContainer>
-                {data.ayahs.map((ayah) => (
-                  <AyahCard key={ayah.number} ayah={ayah} />
-                ))}
-              </CardsContainer>
-            </>
-          )}
-        </>
-      )}
+                  </div>
+                ) : (
+                  hasMore && <LoadMoreSentinel key={`next-${following.length}`} onVisible={loadNext} />
+                )}
+              </>
+            ) : (
+              <>
+                <SurahHeader meta={data.meta} sajdaCount={sajdaCount} />
+                <CardsContainer>
+                  {data.ayahs.map((ayah) => (
+                    <AyahCard key={ayah.number} ayah={ayah} />
+                  ))}
+                </CardsContainer>
+              </>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
