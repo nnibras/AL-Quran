@@ -51,6 +51,22 @@ export function matchesAllTerms(normalizedText: string, terms: string[]): boolea
   return true;
 }
 
+/** Scripts written without spaces between words — "exact" can't require word edges there. */
+const NO_WORD_SPACES = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u;
+
+/**
+ * Regex source for an exact-match search: the terms in this order, separated
+ * only by spaces/punctuation, as whole words (no letters directly before or
+ * after). Case/accents/diacritics are already normalised away on both sides.
+ * For Chinese/Japanese only the phrase itself is required.
+ */
+export function exactPattern(terms: string[]): string {
+  const wholeWords = !terms.some((t) => NO_WORD_SPACES.test(t));
+  const escaped = terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const body = escaped.join(wholeWords ? "[\\s\\p{P}\\p{S}]+" : "[\\s\\p{P}\\p{S}]*");
+  return wholeWords ? `(?<![\\p{L}\\p{M}\\p{N}])${body}(?![\\p{L}\\p{M}\\p{N}])` : body;
+}
+
 export type Range = [start: number, end: number];
 
 /** Normalises `text` char by char, remembering where each normalised char came from. */
@@ -68,26 +84,38 @@ function indexMap(text: string, daggerAlefAsAlef: boolean) {
 }
 
 /**
- * Character ranges of `text` (original, un-normalised) that match any term,
- * merged and sorted. Trailing diacritics are included so Arabic letters are
- * never split from their harakat.
+ * Character ranges of `text` (original, un-normalised) that match any term —
+ * or, when `exact` (an exactPattern source) is given, that match the whole
+ * phrase — merged and sorted. Trailing diacritics are included so Arabic
+ * letters are never split from their harakat.
  */
-export function highlightRanges(text: string, terms: string[], alsoDaggerAlefAsAlef = false): Range[] {
+export function highlightRanges(
+  text: string,
+  terms: string[],
+  alsoDaggerAlefAsAlef = false,
+  exact?: string
+): Range[] {
   if (!terms.length) return [];
   const ranges: Range[] = [];
   const variants = alsoDaggerAlefAsAlef ? [false, true] : [false];
   for (const variant of variants) {
     const { norm, origin } = indexMap(text, variant);
-    for (const term of terms) {
-      let from = norm.indexOf(term);
-      while (from !== -1) {
-        const start = origin[from];
-        const lastOrigin = origin[from + term.length - 1];
-        let end = lastOrigin + String.fromCodePoint(text.codePointAt(lastOrigin)!).length;
-        // swallow following combining marks (they normalise to nothing)
-        while (end < text.length && normalizeForSearch(text[end], variant) === "") end++;
-        ranges.push([start, end]);
-        from = norm.indexOf(term, from + term.length);
+    const add = (from: number, length: number) => {
+      if (length <= 0) return;
+      const start = origin[from];
+      const lastOrigin = origin[from + length - 1];
+      let end = lastOrigin + String.fromCodePoint(text.codePointAt(lastOrigin)!).length;
+      // swallow following combining marks (they normalise to nothing)
+      while (end < text.length && normalizeForSearch(text[end], variant) === "") end++;
+      ranges.push([start, end]);
+    };
+    if (exact) {
+      for (const m of norm.matchAll(new RegExp(exact, "gu"))) add(m.index!, m[0].length);
+    } else {
+      for (const term of terms) {
+        for (let from = norm.indexOf(term); from !== -1; from = norm.indexOf(term, from + term.length)) {
+          add(from, term.length);
+        }
       }
     }
   }
